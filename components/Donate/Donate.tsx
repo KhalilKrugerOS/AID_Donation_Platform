@@ -35,7 +35,7 @@ export default function Donate({
 }: OrganizationProps) {
   return (
     <div className="container mx-auto px-4 py-8">
-      <section className="py-12 md:py-24 lg:py-32">
+      <section className="py-8 md:py-8 lg:py-12">
         <div className="max-w-4xl mx-auto space-y-4">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-center">
             Support Our Cause
@@ -63,11 +63,11 @@ export default function Donate({
                 </p>
               </div>
               <Progress value={calculatePercentage(raisedAmount, goalAmount)} />
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                {contributors} people have contributed
+              <p className="text-sm text-gray-500 dark:text-gray-400 text-center font-bold">
+                {contributors} people have contributed !
               </p>
             </div>
-            <div className="flex flex-col space-y-2 sm:flex-row sm:space-x-7 sm:space-y-0">
+            <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-7 sm:space-y-0 justify-center">
               <button
                 type="button"
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
@@ -85,16 +85,18 @@ export default function Donate({
         </div>
       </section>
 
-      <section className="py-12 md:py-24 lg:py-32">
-        <div className="max-w-4xl mx-auto space-y-4">
+      <section className="py-8 md:py-8 lg:py-12">
+        <div className="max-w-4xl mx-auto space-y-4 text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tighter">
             About Our Organization
           </h2>
-          <p className="text-lg max-w-prose">{description}</p>
+          <p className="text-lg max-w-prose mx-auto text-center text-gray-500 dark:text-gray-400">
+            {description}
+          </p>
         </div>
-        <div className="mt-8 space-y-4">
-          <h3 className="text-2xl font-bold">Contact Us</h3>
-          <div className="space-y-2">
+        <div className="mt-8 tracking-tighter space-y-4 text-center">
+          <h3 className="text-3xl font-bold">Contact Us</h3>
+          <div className="text-lg space-y-2 text-gray-500 dark:text-gray-400">
             <p>
               <span className="font-medium">Bank Account:</span> {bankAccount}
             </p>
@@ -105,8 +107,7 @@ export default function Donate({
               <span className="font-medium">Email:</span>{" "}
               <a href={email}>{email}</a>
             </p>
-          </div>
-          <div className="space-y-2">
+
             <p>
               <span className="font-medium">Legal Documents:</span>
               <Link className="underline" href="#">
