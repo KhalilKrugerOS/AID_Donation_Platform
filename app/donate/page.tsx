@@ -20,12 +20,12 @@ export default function page() {
       <Donate
         name={org.name}
         description={org.description}
-        goalAmount={0}
-        raisedAmount={0}
-        contributors={0}
-        Phone={""}
-        email={""}
-        bankAccount={""}
+        goalAmount={org.goalAmount}
+        raisedAmount={org.raisedAmount}
+        contributors={org.contributors}
+        Phone={org.Phone}
+        email={org.email}
+        bankAccount={org.bankAccount}
         image={org.image}
       />
     </>

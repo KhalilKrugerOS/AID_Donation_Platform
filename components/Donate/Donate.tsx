@@ -13,6 +13,14 @@ export interface OrganizationProps {
   bankAccount: string;
   image: string;
 }
+function calculatePercentage(value: number, total: number): string {
+  if (typeof value !== "number" || typeof total !== "number" || total === 0) {
+    return "Invalid input. Please provide numerical values and ensure the total is not zero.";
+  }
+
+  const percentage: number = (value / total) * 100;
+  return percentage.toFixed(0);
+}
 
 export default function Donate({
   name,
@@ -50,9 +58,11 @@ export default function Donate({
                 <p className="text-lg font-medium">
                   {raisedAmount} raised of {goalAmount} goal
                 </p>
-                <p className="text-lg font-medium">62%</p>
+                <p className="text-lg font-medium">
+                  {calculatePercentage(raisedAmount, goalAmount)} %
+                </p>
               </div>
-              <Progress value={62} />
+              <Progress value={calculatePercentage(raisedAmount, goalAmount)} />
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {contributors} people have contributed
               </p>
