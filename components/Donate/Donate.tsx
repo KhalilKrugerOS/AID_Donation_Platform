@@ -1,6 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import Progress from "../ui/Progress";
+import Social from "../SocialMedia/Social";
+import { FiShare } from "react-icons/fi";
 
 export interface OrganizationProps {
   name: string;
@@ -78,7 +80,10 @@ export default function Donate({
                 type="button"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               >
-                share
+                <div className="flex">
+                  share {"  "}
+                  <FiShare />
+                </div>
               </button>
             </div>
           </div>
@@ -120,17 +125,7 @@ export default function Donate({
             </p>
             <p>
               <span className="font-medium">Social Media:</span>
-              <Link className="underline" href="#">
-                Facebook
-              </Link>
-              ,
-              <Link className="underline" href="#">
-                Twitter
-              </Link>
-              ,
-              <Link className="underline" href="#">
-                Instagram
-              </Link>
+              <Social />
             </p>
           </div>
         </div>
