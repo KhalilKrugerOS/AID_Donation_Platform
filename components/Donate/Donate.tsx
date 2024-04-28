@@ -74,7 +74,9 @@ export default function Donate({
                 type="button"
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
               >
-                Donate Now
+                <a href="https://buy.stripe.com/test_aEUaIk5dq6UQ7gQfYY">
+                  Donate Now
+                </a>
               </button>
               <button
                 type="button"
