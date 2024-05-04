@@ -1,24 +1,15 @@
 import "./lic.css";
 
-type CertificateField = {
-  label: string;
-  value: string;
-};
+interface GenerateCertificate {
+  fileName: string;
+  description: string;
+  ID: string;
+}
 
-type CurrentUser = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
+interface CurrentUser {
+  name: string;
   address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-};
-
-type GenerateCertificate = {
-  fields: CertificateField[];
-};
+}
 const License = ({
   currentUser,
   generateCertificated,
