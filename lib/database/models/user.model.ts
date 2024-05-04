@@ -9,6 +9,7 @@ const UserSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
   photo: { type: String, required: true },
   phoneNumber: { type: String, required: true },
+  bio: { type: String },
 });
 
 const User = models.User || model("User", UserSchema);
