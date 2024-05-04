@@ -69,11 +69,11 @@ const License = ({
         </h1>{" "}
         {/* Application de la police Gabriola */}
         <p className="student-name" style={{ color: "black" }}>
-          {currentUser?.name}
+          {currentUser?.name ?? "Unknown"}
         </p>
         <div className="certificate-content" style={{ marginTop: "10px" }}>
           <p className="topic-title" style={{ color: "black" }}>
-            {generateCertificated?.fileName}
+            {generateCertificated?.fileName ?? "Unknown"}
           </p>
           <div className="text-center">
             <p
@@ -83,10 +83,11 @@ const License = ({
               {generateCertificated?.description}
             </p>
             <p style={{ color: "black" }}>
-              M. {generateCertificated?.fileName} a réussi à faire un don de DT{" "}
-              {currentUser?.address} à X {generateCertificated?.ID}. Au nom de
-              nous tous à l'association AID, nous vous remercions pour votre don
-              et votre assistance !
+              M. {generateCertificated?.fileName ?? "Unknown"} a réussi à faire
+              un don de DT {currentUser?.address ?? "Unknown"} à X{" "}
+              {generateCertificated?.ID ?? "Unknown"}. Au nom de nous tous à
+              l'association AID, nous vous remercions pour votre don et votre
+              assistance !
             </p>
           </div>
         </div>
