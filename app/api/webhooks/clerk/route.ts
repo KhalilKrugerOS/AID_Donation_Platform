@@ -58,12 +58,14 @@ export async function POST(req: Request) {
   if (eventType === "user.created") {
     const { id, email_addresses, image_url, first_name, last_name, username } =
       evt.data;
+    console.log(id);
+    console.log("from webhook...");
     const user = {
       clerkId: id,
       email: email_addresses[0].email_address,
+      username: username!,
       firstName: first_name!,
       lastName: last_name!,
-      username: username!,
       photo: image_url,
     };
     const newUser = await createUser(user);
@@ -78,7 +80,7 @@ export async function POST(req: Request) {
   }
   if (eventType === "user.updated") {
     const { id, image_url, first_name, last_name, username } = evt.data;
-
+    console.log("userId to update:", evt.data.id);
     const user = {
       firstName: first_name!,
       lastName: last_name!,
@@ -93,6 +95,7 @@ export async function POST(req: Request) {
 
   if (eventType === "user.deleted") {
     const { id } = evt.data;
+    console.log("userId to delete:", evt.data.id);
 
     const deletedUser = await deleteUser(id!);
 
