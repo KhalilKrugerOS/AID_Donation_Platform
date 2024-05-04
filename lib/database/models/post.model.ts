@@ -1,5 +1,5 @@
 import { Schema, models, model, Document } from "mongoose";
-
+// TODO: review fields
 export interface IPost extends Document {
   _id: string;
   title: string;
@@ -30,6 +30,7 @@ const PostSchema = new Schema({
   isCompleted: { type: Boolean, default: false },
   category: { type: Schema.Types.ObjectId, ref: "Category" },
   organisation: { type: Schema.Types.ObjectId, ref: "User" },
+  //views && answers && is urgent
 });
 
 const Post = models.Post || model("Post", PostSchema);
