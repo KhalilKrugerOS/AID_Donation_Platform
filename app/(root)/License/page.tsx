@@ -1,11 +1,30 @@
 import "./lic.css";
 
+type CertificateField = {
+  label: string;
+  value: string;
+};
+
+type CurrentUser = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+};
+
+type GenerateCertificate = {
+  fields: CertificateField[];
+};
 const License = ({
   currentUser,
   generateCertificated,
 }: {
-  currentUser: any;
-  generateCertificated: any;
+  currentUser: CurrentUser;
+  generateCertificated: GenerateCertificate;
 }) => {
   return (
     <div className="certificate">
