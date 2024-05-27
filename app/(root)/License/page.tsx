@@ -25,7 +25,7 @@ const License = () => {
             <p className="topic-description text-muted" style={{ color: "black" }}>
               {}
             </p>
-            <p style={{ color: "black" }}>M. {} a réussi à faire un don de DT {} à X {}. Au nom de nous tous à l'association AID, nous vous remercions pour votre don et votre assistance !</p>
+            <p style={{ color: "black" }}>M(me). {} a réussi(e) à faire un don de DT {} à X {}. Au nom de nous tous à l'association AID, nous vous remercions pour votre don et votre assistance !</p>
           </div>
         </div>
        
