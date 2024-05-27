@@ -1,6 +1,6 @@
 import "./lic.css";
 
-const License = ({ currentUser, generateCertificated }) => {
+const License = () => {
   return (
     <div className="certificate"> {/* Conteneur du certificat */}
       <div className="water-mark-overlay"></div>
