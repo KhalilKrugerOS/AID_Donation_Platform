@@ -18,14 +18,14 @@ const License = ({ currentUser, generateCertificated }) => {
         </p>
         <hr style={{ borderTop: "2px solid black", width: "80%", margin: "5px auto" }} /> {/* Première ligne en dessous du titre */}
         <h1 style={{ textAlign: "center", color: "black" }}>Ceci certifie que</h1> {/* Application de la police Gabriola */}
-        <p className="student-name" style={{ color: "black" }}>{currentUser?.name}</p>
+        <p className="student-name" style={{ color: "black" }}>{}</p>
         <div className="certificate-content" style={{ marginTop: "10px" }}>
-          <p className="topic-title" style={{ color: "black" }}>{generateCertificated?.fileName}</p>
+          <p className="topic-title" style={{ color: "black" }}>{}</p>
           <div className="text-center">
             <p className="topic-description text-muted" style={{ color: "black" }}>
-              {generateCertificated?.description}
+              {}
             </p>
-            <p style={{ color: "black" }}>M. {generateCertificated?.fileName} a réussi à faire un don de DT {currentUser?.address} à X {generateCertificated?.ID}. Au nom de nous tous à l'association AID, nous vous remercions pour votre don et votre assistance !</p>
+            <p style={{ color: "black" }}>M. {} a réussi à faire un don de DT {currentUser?.address} à X {generateCertificated?.ID}. Au nom de nous tous à l'association AID, nous vous remercions pour votre don et votre assistance !</p>
           </div>
         </div>
        
