@@ -1,7 +1,7 @@
 import EventForm from "@/components/shared/EventForm";
 import { auth } from "@clerk/nextjs/server";
 
-const CreateRequest = () => {
+const UpdateRequest = () => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
   return (
@@ -12,10 +12,10 @@ const CreateRequest = () => {
         </h3>
       </section>
       <div className="wrapper my-8">
-        <EventForm userId={userId} type={"Create"} />
+        <EventForm userId={userId} type={"Update"} />
       </div>
     </>
   );
 };
 
-export default CreateRequest;
+export default UpdateRequest;
