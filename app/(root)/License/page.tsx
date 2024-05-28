@@ -1,22 +1,6 @@
 import "./lic.css";
 
-interface GenerateCertificate {
-  fileName: string;
-  description: string;
-  ID: string;
-}
-
-interface CurrentUser {
-  name: string;
-  address: string;
-}
-const License = ({
-  currentUser,
-  generateCertificated,
-}: {
-  currentUser: CurrentUser;
-  generateCertificated: GenerateCertificate;
-}) => {
+const License = () => {
   return (
     <div className="certificate">
       {" "}
@@ -69,25 +53,23 @@ const License = ({
         </h1>{" "}
         {/* Application de la police Gabriola */}
         <p className="student-name" style={{ color: "black" }}>
-          {currentUser?.name ?? "Unknown"}
+          {}
         </p>
         <div className="certificate-content" style={{ marginTop: "10px" }}>
           <p className="topic-title" style={{ color: "black" }}>
-            {generateCertificated?.fileName ?? "Unknown"}
+            {}
           </p>
           <div className="text-center">
             <p
               className="topic-description text-muted"
               style={{ color: "black" }}
             >
-              {generateCertificated?.description}
+              {}
             </p>
             <p style={{ color: "black" }}>
-              M. {generateCertificated?.fileName ?? "Unknown"} a réussi à faire
-              un don de DT {currentUser?.address ?? "Unknown"} à X{" "}
-              {generateCertificated?.ID ?? "Unknown"}. Au nom de nous tous à
-              l'association AID, nous vous remercions pour votre don et votre
-              assistance !
+              M(me). {} a réussi(e) à faire un don de DT {} à X {}. Au nom de
+              nous tous à l'association AID, nous vous remercions pour votre don
+              et votre assistance !
             </p>
           </div>
         </div>
