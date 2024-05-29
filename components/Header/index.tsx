@@ -9,7 +9,7 @@ import menuData from "./menuData";
 const Header = () => {
   // Navbar toggle
   const [navbarOpen, setNavbarOpen] = useState(false);
- 
+
   const navbarToggleHandler = () => {
     setNavbarOpen(!navbarOpen);
   };
@@ -27,7 +27,7 @@ const Header = () => {
     window.addEventListener("scroll", handleStickyNavbar);
   });
 
-  // submenu handler
+  // Submenu handler
   const [openIndex, setOpenIndex] = useState(-1);
   const handleSubmenu = (index: SetStateAction<number>) => {
     if (openIndex === index) {
@@ -106,24 +106,24 @@ const Header = () => {
                   }`}
                 >
                   <ul className="block lg:flex lg:space-x-12">
-                  {menuData.map((menuItem, index) => (
-  <div key={index}>
-    <button onClick={() => handleSubmenu(index)}>
-      {menuItem.title}
-    </button>
-    {menuItem.submenu && (
-      <ul>
-        {menuItem.submenu.map((subItem, subIndex) => (
-          <li key={subIndex}>
-            <Link href={subItem.href}>
-              {subItem.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    )}
-  </div>
-))}
+                    {menuData.map((menuItem, index) => (
+                      <div key={index}>
+                        <button onClick={() => handleSubmenu(index)}>
+                          {menuItem.title}
+                        </button>
+                        {menuItem.submenu && (
+                          <ul>
+                            {menuItem.submenu.map((subItem, subIndex) => (
+                              <li key={subIndex}>
+                                <Link href={subItem.href}>
+                                  {subItem.title}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    ))}
                   </ul>
                 </nav>
               </div>

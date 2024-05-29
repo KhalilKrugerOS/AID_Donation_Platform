@@ -1,7 +1,7 @@
 import { authMiddleware } from "@clerk/nextjs/server";
 
-export default authMiddleware(
-  {
+// FIXME: add all assets to public routes so unauth users may see them
+export default authMiddleware({
   publicRoutes: [
     "/",
     "/events/:id",
@@ -17,6 +17,7 @@ export default authMiddleware(
     "/api/webhook/stripe",
     "/api/webhook/clerk",
     "/api/uploadthing",
+    "/api/webhooks(.*)",
   ],
 });
 
