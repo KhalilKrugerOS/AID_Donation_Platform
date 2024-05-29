@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   // other metadata
 };
 
-const SigninPage = () => {
+const SigninDonateur = () => {
   return (
     <>
       <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
@@ -174,4 +174,4 @@ const SigninPage = () => {
   );
 };
 
-export default SigninPage;
+export default SigninDonateur;
