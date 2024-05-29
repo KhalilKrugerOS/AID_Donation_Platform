@@ -19,7 +19,7 @@ export interface IPost extends Document {
 
 const PostSchema = new Schema({
   title: { type: String, required: true, unique: true },
-  content: { type: String, required: true },
+  description: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   startDate: { type: Date, default: Date.now },
   endDate: { type: Date, default: Date.now },
@@ -29,7 +29,7 @@ const PostSchema = new Schema({
   amountReceived: { type: Number, default: 0 },
   isCompleted: { type: Boolean, default: false },
   category: { type: Schema.Types.ObjectId, ref: "Category" },
-  organisation: { type: Schema.Types.ObjectId, ref: "User" },
+  Fundraiser_organisation: { type: Schema.Types.ObjectId, ref: "User" },
   //views && answers && is urgent
 });
 

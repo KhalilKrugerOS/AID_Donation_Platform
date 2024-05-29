@@ -7,6 +7,7 @@ const UserSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   photo: { type: String, required: true },
+  // aziz => organisation (clerk) && setup ngrok && phone number
 });
 
 const User = models.User || model("User", UserSchema);
