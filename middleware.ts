@@ -1,6 +1,7 @@
 import { authMiddleware } from "@clerk/nextjs/server";
 
-export default authMiddleware({
+export default authMiddleware(
+  {
   publicRoutes: [
     "/",
     "/events/:id",
@@ -10,6 +11,7 @@ export default authMiddleware({
     "/favicon.ico",
     "/assets/images/logo.svg",
     "/assets/images/dotted-pattern.png",
+    "/sign-in",
   ],
   ignoredRoutes: [
     "/api/webhook/stripe",

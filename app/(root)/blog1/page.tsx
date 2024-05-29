@@ -1,6 +1,5 @@
-
-import SingleBlog from "@/components/Cathegories/SingleBlog";
-import blogData from "@/components/Cathegories/blogData";
+import SingleBlog from "@/components/Blog1/SingleBlog";
+import blogData from "@/components/Blog1/blogData";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 
 import { Metadata } from "next";
@@ -11,23 +10,23 @@ export const metadata: Metadata = {
   // other metadata
 };
 
-const Cathegories = () => {
+const Blog1 = () => {
   return (
     <>
     
     <Breadcrumb
-     pageName="Médical et Santé"
+     pageName="Défenses des animaux"
     description="Les fonds sont remis à l'association à but non lucratif de votre choix"
   /> 
       <section className="pb-[120px] pt-[120px]">
         <div className="container">
           <div className="-mx-4 flex flex-wrap justify-center">
-            {blogData.map((blog) => (
+            {blogData.map((Blog1) => (
               <div
-                key={blog.id}
+                key={Blog1.id}
                 className="w-full px-4 md:w-2/3 lg:w-1/2 xl:w-1/3"
               >
-                <SingleBlog blog={blog} />
+                <SingleBlog blog={Blog1} />
               </div>
             ))}
           </div>
@@ -97,4 +96,4 @@ const Cathegories = () => {
   );
 };
 
-export default Cathegories;
+export default Blog1;
