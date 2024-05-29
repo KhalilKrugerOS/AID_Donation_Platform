@@ -11,7 +11,7 @@ import Features from "@/components/Features";
 import Hero from "@/components/Hero";
 import Pricing from "@/components/Pricing";
 import Testimonials from "@/components/Testimonials";
-
+import Video from "@/components/Video";
 
 export default function Home() {
   useEffect(() => {
@@ -58,7 +58,9 @@ export default function Home() {
       <div className="reveal">
         <Features />
       </div>
-     
+      <div className="reveal">
+        <Video />
+      </div>
       <div className="reveal">
         <Brands />
       </div>
