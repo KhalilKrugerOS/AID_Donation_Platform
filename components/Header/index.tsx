@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
 
-/*const Header = () => {
-
+const Header = () => {
   // Navbar toggle
   const [navbarOpen, setNavbarOpen] = useState(false);
   const navbarToggleHandler = () => {
@@ -182,10 +181,6 @@ import menuData from "./menuData";
       </header>
     </>
   );
-};*/
-
-const Header = () => {
-  return <div></div>;
 };
 
 export default Header;
