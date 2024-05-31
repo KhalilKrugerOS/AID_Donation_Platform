@@ -7,10 +7,6 @@ import User from "@/lib/database/models/user.model";
 import Post from "@/lib/database/models/post.model";
 import Donation from "@/lib/database/models/donation.model";
 import { revalidatePath } from "next/cache";
-import {
-  GetUserByIdParams,
-  GetUserStatsParams,
-} from "@/lib/actions/shared.types";
 
 export const createUser = async (user: CreateUserParams) => {
   try {
@@ -82,40 +78,5 @@ export async function deleteUser(clerkId: string) {
     return deletedUser ? JSON.parse(JSON.stringify(deletedUser)) : null;
   } catch (error) {
     handleError(error);
-  }
-}
-
-export async function getUserInfo(params: GetUserByIdParams) {
-  try {
-    await connectToDatabase(); // Ensure await for async connection
-
-    const { userId } = params;
-
-    const user = await User.findOne({ clerkId: userId }).exec(); // Added .exec() for better error handling
-
-    if (!user) {
-      throw new Error("❌🔍 User not found 🔍❌");
-    }
-
-    const userOutput = {
-      firstname: user.firstname,
-      lastname: user.lastname,
-      username: user.username,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      bio: user.bio,
-      picture: user.picture,
-      location: user.location,
-      socialMediaLink: user.socialMediaLink,
-      reputation: user.reputation,
-      saved: user.saved,
-      joinedAt: user.joinedAt,
-    };
-
-    return userOutput;
-  } catch (error) {
-    console.error("Error fetching user information:", (error as Error).message);
-    // Optionally, you could throw the error to handle it higher up the call stack
-    throw error;
   }
 }
