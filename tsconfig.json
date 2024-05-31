@@ -28,6 +28,6 @@
     ".next/types/**/*.ts",
     "app/(root)/License/page.jsx",
     "app/(root)/License/page.jsx"
-  ],
+, "app/api/donate"  ],
   "exclude": ["node_modules"]
 }
