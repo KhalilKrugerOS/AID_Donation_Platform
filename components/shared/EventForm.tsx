@@ -63,9 +63,10 @@ const EventForm = ({ userId, type, post, postId }: EventFormProps) => {
     if (files.length > 0) {
       const uploadedImages = await startUpload(files);
       if (!uploadedImages) {
-        console.log("image not uploaded");
+        console.log("image not uploaded successfully");
         return;
       }
+
       uploadedImageUrl = uploadedImages[0].url;
 
       console.log("the values taken : ", {
