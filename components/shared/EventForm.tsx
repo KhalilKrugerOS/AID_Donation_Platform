@@ -68,8 +68,7 @@ const EventForm = ({ userId, type }: EventFormProps) => {
       });
       if (newDonationRequest) {
         form.reset();
-        //router.push(`/feed/${newDonationRequest._id}`);
-        router.push(`/`);
+        router.push(`/announcements/${newDonationRequest._id}`);
       }
     } catch (error) {
       console.log(error);
