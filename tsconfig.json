@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -20,6 +21,7 @@
     "paths": {
       "@/*": ["./*"]
     }
+    
   },
   "include": [
     "next-env.d.ts",
@@ -28,6 +30,6 @@
     ".next/types/**/*.ts",
     "app/(root)/License/page.jsx",
     "app/(root)/License/page.jsx"
-  ],
+, "app/api/donate"  ],
   "exclude": ["node_modules"]
 }

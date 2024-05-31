@@ -1,6 +1,6 @@
 import { authMiddleware } from "@clerk/nextjs/server";
 
-// FIXME: add all assets to public routes so unauth users may see them
+//FIXME: add all assets to public routes so unauth users may see them
 export default authMiddleware({
   publicRoutes: [
     "/",
@@ -11,6 +11,7 @@ export default authMiddleware({
     "/favicon.ico",
     "/assets/images/logo.svg",
     "/assets/images/dotted-pattern.png",
+    "/sign-in",
   ],
   ignoredRoutes: [
     "/api/webhook/stripe",
