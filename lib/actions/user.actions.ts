@@ -87,11 +87,11 @@ export async function deleteUser(clerkId: string) {
 
 export async function getUserInfo(params: GetUserByIdParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase(); // Ensure await for async connection
 
     const { userId } = params;
 
-    const user = await User.findOne({ clerkId: userId });
+    const user = await User.findOne({ clerkId: userId }).exec(); // Added .exec() for better error handling
 
     if (!user) {
       throw new Error("❌🔍 User not found 🔍❌");
@@ -102,7 +102,6 @@ export async function getUserInfo(params: GetUserByIdParams) {
       lastname: user.lastname,
       username: user.username,
       email: user.email,
-      password: user.password, // Note: It's not recommended to store passwords in plain text. Consider using a secure password hashing algorithm.
       phoneNumber: user.phoneNumber,
       bio: user.bio,
       picture: user.picture,
@@ -115,6 +114,8 @@ export async function getUserInfo(params: GetUserByIdParams) {
 
     return userOutput;
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching user information:", (error as Error).message);
+    // Optionally, you could throw the error to handle it higher up the call stack
+    throw error;
   }
 }
