@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 const CreateRequest = () => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
+  console.log("userId : ", userId);
   return (
     <>
       <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5">

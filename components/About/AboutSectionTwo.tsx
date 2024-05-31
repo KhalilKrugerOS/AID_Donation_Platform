@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from 'react';
 import Image from "next/image";
 
 const AboutSectionTwo = () => {
@@ -28,28 +31,25 @@ const AboutSectionTwo = () => {
             <div className="max-w-[470px]">
               <div className="mb-9">
                 <p className="mb-4 text-xl font-bold text-black dark:text-white sm:text-2xl lg:text-xl xl:text-2xl">
-                Notre Mission
-
+                💫 Notre Mission
                 </p>
                 <p className="text-base font-medium leading-relaxed text-body-color sm:text-lg sm:leading-relaxed">
-                S'engager pour le Changement:
-Chez AID, nous croyons que chaque initiative a le pouvoir de changer le monde. 
-Nous nous engageons à soutenir chaque cause, grande ou petite.
+                 S'engager pour le Changement:
+                  Chez AID, nous croyons que chaque initiative a le pouvoir de changer le monde.
+                  Nous nous engageons à soutenir chaque cause, grande ou petite.
                 </p>
               </div>
               <div className="mb-9">
                 <h6 className="mb-4 text-xl font-bold text-black dark:text-white sm:text-2xl lg:text-xl xl:text-2xl">
-                Notre Vision
+                💫 Notre Vision
                 </h6>
                 <p className="text-base font-medium leading-relaxed text-body-color sm:text-lg sm:leading-relaxed">
                 Innover pour Inspirer :
- AID vise à révolutionner la manière dont le soutien financier est apporté aux projets caritatifs, 
- en rendant le processus de don aussi simple et transparent que possible. 
-Avec chaque nouvelle fonctionnalité, nous espérons inciter une vague de générosité globale.
-
+                  AID vise à révolutionner la manière dont le soutien financier est apporté aux projets caritatifs,
+                  en rendant le processus de don aussi simple et transparent que possible.
+                  Avec chaque nouvelle fonctionnalité, nous espérons inciter une vague de générosité globale.
                 </p>
               </div>
-            
             </div>
           </div>
         </div>
