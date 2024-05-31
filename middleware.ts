@@ -11,6 +11,7 @@ export default authMiddleware({
     "/favicon.ico",
     "/assets/images/logo.svg",
     "/assets/images/dotted-pattern.png",
+    "/sign-in",
   ],
   ignoredRoutes: [
     "/api/webhook/stripe",
