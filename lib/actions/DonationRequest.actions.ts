@@ -1,6 +1,6 @@
 "use server";
-
-import { CreateEventParams, GetAllEventsParams } from "@/types";
+import { revalidatePath } from 'next/cache'
+import { CreateEventParams, DeleteEventParams, GetAllEventsParams, GetEventsByUserParams, GetRelatedEventsByCategoryParams, UpdateEventParams } from "@/types";
 import { handleError } from "../utils";
 import { connectToDatabase } from "../database";
 import User from "../database/models/user.model";
@@ -78,6 +78,94 @@ export const getAllDonationRequests = async ({ query, limit = 6, page, category 
             totalPages: Math.ceil(donationRequestsCount / limit),
             data: JSON.parse(JSON.stringify(donationRequestsquery)),
         }
+    } catch (error) {
+        handleError(error)
+    }
+}
+
+
+// DELETE
+export async function deletDonationRequest({ postId, path }: DeleteEventParams) {
+    try {
+        await connectToDatabase()
+
+        const deletedEvent = await Post.findByIdAndDelete(postId)
+        if (deletedEvent) revalidatePath(path)
+    } catch (error) {
+        handleError(error)
+    }
+}
+
+
+// UPDATE
+export async function updateDonationRequest({ userId, post, path }: UpdateEventParams) {
+    try {
+        await connectToDatabase()
+
+        const PostToUpdate = await Post.findById(post._id)
+        if (!PostToUpdate || PostToUpdate.Fundraiser_organisation.toHexString() !== userId) {
+            throw new Error('Unauthorized or event not found')
+        }
+
+        const updatedPost = await Post.findByIdAndUpdate(
+            post._id,
+            { ...post, category: post.categoryId },
+            { new: true }
+        )
+        revalidatePath(path)
+
+        return JSON.parse(JSON.stringify(updatedPost))
+    } catch (error) {
+        handleError(error)
+    }
+}
+
+
+
+// GET EVENTS BY ORGANIZER
+export async function getEventsByUser({ userId, limit = 6, page }: GetEventsByUserParams) {
+    try {
+        await connectToDatabase()
+
+        const conditions = { organizer: userId }
+        const skipAmount = (page - 1) * limit
+
+        const postsQuery = Post.find(conditions)
+            .sort({ createdAt: 'desc' })
+            .skip(skipAmount)
+            .limit(limit)
+
+        const posts = await PopulateRequest(postsQuery)
+        const postsCount = await Post.countDocuments(conditions)
+
+        return { data: JSON.parse(JSON.stringify(posts)), totalPages: Math.ceil(postsCount / limit) }
+    } catch (error) {
+        handleError(error)
+    }
+}
+
+// GET RELATED posts: EVENTS WITH SAME CATEGORY
+export async function getRelatedEventsByCategory({
+    categoryId,
+    postId,
+    limit = 3,
+    page = 1,
+}: GetRelatedEventsByCategoryParams) {
+    try {
+        await connectToDatabase()
+
+        const skipAmount = (Number(page) - 1) * limit
+        const conditions = { $and: [{ category: categoryId }, { _id: { $ne: postId } }] }
+
+        const postsQuery = Post.find(conditions)
+            .sort({ createdAt: 'desc' })
+            .skip(skipAmount)
+            .limit(limit)
+
+        const posts = await PopulateRequest(postsQuery)
+        const postsCount = await Post.countDocuments(conditions)
+
+        return { data: JSON.parse(JSON.stringify(posts)), totalPages: Math.ceil(postsCount / limit) }
     } catch (error) {
         handleError(error)
     }

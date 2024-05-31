@@ -33,7 +33,7 @@ export type CreateEventParams = {
 
 export type UpdateEventParams = {
   userId: string;
-  event: {
+  post: {
     _id: string;
     title: string;
     imageUrl: string;
@@ -42,15 +42,14 @@ export type UpdateEventParams = {
     startDateTime: Date;
     endDateTime: Date;
     categoryId: string;
-    price: string;
-    isFree: boolean;
-    url: string;
+    amountNeeded: string;
+    amountReceived?: string;
   };
   path: string;
 };
 
 export type DeleteEventParams = {
-  eventId: string;
+  postId: string;
   path: string;
 };
 
@@ -69,7 +68,7 @@ export type GetEventsByUserParams = {
 
 export type GetRelatedEventsByCategoryParams = {
   categoryId: string;
-  eventId: string;
+  postId: string;
   limit?: number;
   page: number | string;
 };

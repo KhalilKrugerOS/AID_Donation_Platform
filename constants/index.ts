@@ -22,5 +22,4 @@ export const eventDefaultValues = {
   endDateTime: new Date(),
   categoryId: "",
   amountNeeded: "",
-  url: "",
 };

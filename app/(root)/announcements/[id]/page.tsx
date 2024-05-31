@@ -4,6 +4,7 @@ import { getDonationRequestById } from "../../../../lib/actions/DonationRequest.
 import Image from "next/image";
 import { IPost } from "@/lib/database/models/post.model";
 import { formatDateTime } from "@/lib/utils";
+import ButtonCheckout from "@/components/shared/ButtonCheckout";
 const RequestDonationDetails = async ({ params: { id } }: SearchParamProps) => {
   // TODO: thabet mel interface sinon na7eha IPost
   console.log("id : ", id);
@@ -45,6 +46,7 @@ const RequestDonationDetails = async ({ params: { id } }: SearchParamProps) => {
           </div>
 
           {/* checkout */}
+          <ButtonCheckout post={post} />
           <div className="flex flex-col gap-3">
             <div className="flex gap-2 md:gap-3">
               <Image

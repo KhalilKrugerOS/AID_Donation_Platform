@@ -3,19 +3,19 @@ import { getAllDonationRequests } from "@/lib/actions/DonationRequest.actions";
 import React from "react";
 
 const page = async () => {
-  const getDonationRequests = await getAllDonationRequests({
+  const DonationRequestPosts = await getAllDonationRequests({
     query: "",
     category: "",
     page: 1,
     limit: 6,
   });
 
-  console.log(getDonationRequests);
+  //console.log(DonationRequestPosts);
   return (
     <>
       <Collections
-        data={[]}
-        emptyTitle="No Announcement"
+        data={DonationRequestPosts?.data}
+        emptyTitle="Pas d'annonces"
         emptyStateSubText="revenez bientot"
         CollectionType="all_Announcements"
         limit={6}
