@@ -12,7 +12,7 @@ const Blog = () => {
         <div className="container">
           <SectionTitle 
             title="Les associations ont augmenté leurs dons de plus de 100 %."
-            paragraph="Explorez les histoires inspirantes qui illustrent notre efficacité dans l'atteinte de nos objectifs humanitaires."
+            paragraph="Explorez les histoires inspirantes qui illustrent notre efficacité dans l'atteinte de nos objectifs humanitaires..."
             center
           />
 

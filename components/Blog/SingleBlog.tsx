@@ -15,7 +15,7 @@ const SingleBlog = ({ blog }: { blog: Blog }) => {
           className="relative block aspect-[37/22] w-full"
         >
           <span className="absolute right-6 top-6 z-20 inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold capitalize text-white">
-            <Counter endValue={percentage} duration={2000} /> {/* 2 seconds duration */}
+            <Counter endValue={percentage} duration={2005} /> {/* 2 seconds duration */}
           </span>
           <Image src={image} alt="image" fill />
         </Link>

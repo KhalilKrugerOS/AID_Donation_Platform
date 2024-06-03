@@ -1,6 +1,16 @@
 import Counter from './counter';
 
-const BlogItem = ({ blog }) => {
+interface Blog {
+  id: number,
+    title: string,
+    paragraph: string
+    image: string,
+    
+    tags: string[],
+    publishDate: string,
+}
+
+const BlogItem = ({ blog } : { blog : Blog}) => {
   const percentage = parseInt(blog.tags[0].replace('%', '').replace('+', ''), 10);
 
   return (
