@@ -11,6 +11,11 @@ export const headerLinks = [
     label: "My Profile",
     route: "/profile",
   },
+  {
+    label: "Funds",
+    route: "/announcements",
+  },
+
 ];
 
 export const eventDefaultValues = {
@@ -22,5 +27,4 @@ export const eventDefaultValues = {
   endDateTime: new Date(),
   categoryId: "",
   amountNeeded: "",
-  url: "",
 };

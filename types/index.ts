@@ -18,7 +18,7 @@ export type UpdateUserParams = {
 // ====== EVENT PARAMS
 export type CreateEventParams = {
   userId: string;
-  event: {
+  RequestInfo: {
     title: string;
     description: string;
     location: string;
@@ -26,16 +26,14 @@ export type CreateEventParams = {
     startDateTime: Date;
     endDateTime: Date;
     categoryId: string;
-    price: string;
-    isFree: boolean;
-    url: string;
+    amountNeeded: string;
   };
   path: string;
 };
 
 export type UpdateEventParams = {
   userId: string;
-  event: {
+  post: {
     _id: string;
     title: string;
     imageUrl: string;
@@ -44,15 +42,14 @@ export type UpdateEventParams = {
     startDateTime: Date;
     endDateTime: Date;
     categoryId: string;
-    price: string;
-    isFree: boolean;
-    url: string;
+    amountNeeded: string;
+    amountReceived?: string;
   };
   path: string;
 };
 
 export type DeleteEventParams = {
-  eventId: string;
+  postId: string;
   path: string;
 };
 
@@ -71,7 +68,7 @@ export type GetEventsByUserParams = {
 
 export type GetRelatedEventsByCategoryParams = {
   categoryId: string;
-  eventId: string;
+  postId: string;
   limit?: number;
   page: number | string;
 };
@@ -105,23 +102,22 @@ export type CreateCategoryParams = {
 
 // ====== ORDER PARAMS
 export type CheckoutOrderParams = {
-  eventTitle: string;
-  eventId: string;
-  price: string;
-  isFree: boolean;
-  buyerId: string;
+  postTitle: string;
+  postId: string;
+  amountNeeded: number;
+  donatorId: string;
 };
 
-export type CreateOrderParams = {
+export type CreateDonationParams = {
   stripeId: string;
-  eventId: string;
-  buyerId: string;
-  totalAmount: string;
+  postId: string;
+  donatorId: string;
+  amountNeeded: string;
   createdAt: Date;
 };
 
-export type GetOrdersByEventParams = {
-  eventId: string;
+export type GetDonationsByRequestParams = {
+  postId: string;
   searchString: string;
 };
 

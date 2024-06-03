@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import AboutSectionOne from "@/components/About/AboutSectionOne";
 import AboutSectionTwo from "@/components/About/AboutSectionTwo";
-import Blog from "@/components/Blog";
+
 import Brands from "@/components/Brands";
 import ScrollUp from "@/components/Common/ScrollUp";
 import Contact from "@/components/Contact";
@@ -29,12 +29,12 @@ export default function Home() {
         }
       }
     };
-    <ScrollUp />
-   
+    <ScrollUp />;
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
- 
+
   return (
     <>
       <style jsx global>{`
@@ -48,9 +48,9 @@ export default function Home() {
           transform: translateY(0);
         }
       `}</style>
-     
+
       <div className="reveal">
-      <Hero />
+        <Hero />
       </div>
       <div className="reveal">
         <AboutSectionTwo />
@@ -70,13 +70,10 @@ export default function Home() {
       <div className="reveal">
         <Testimonials />
       </div>
-      <div className="reveal">
-        <Blog />
-      </div>
+
       <div className="reveal">
         <Contact />
       </div>
     </>
   );
 }
-

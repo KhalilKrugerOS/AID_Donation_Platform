@@ -18,6 +18,5 @@ export const RequestFormSchema = z.object({
     startDateTime: z.date(),
     endDateTime: z.date(),
     categoryId: z.string(),
-    amountNeeded: z.string(),
-    url: z.string().url()
+    amountNeeded: z.string()
 });

@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -19,32 +20,102 @@ import {
 import { Input } from "@/components/ui/input";
 import Dropdown from "./Dropdown";
 import { FileUploader } from "./FileUploader";
+import { useUploadThing } from "@/lib/uploadthing";
 import { RequestFormSchema } from "@/lib/validator";
 import { eventDefaultValues } from "@/constants";
 import { Textarea } from "../ui/textarea";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import {
+  createDonationRequest,
+  updateDonationRequest,
+} from "@/lib/actions/DonationRequest.actions";
+import { IPost } from "@/lib/database/models/post.model";
 type EventFormProps = {
   userId: string;
   type: "Create" | "Update";
+  post?: any;
+  postId?: string;
 };
 
-const EventForm = ({ userId, type }: EventFormProps) => {
+const EventForm = ({ userId, type, post, postId }: EventFormProps) => {
+  const router = useRouter();
   const [files, setFiles] = useState<File[]>([]);
-  const initialValues = eventDefaultValues;
+  const initialValues =
+    {
+      ...post,
+      startDate: new Date(post?.startDate),
+      endDate: new Date(post?.endDate),
+    } && type === "Update"
+      ? post
+      : eventDefaultValues;
   const form = useForm<z.infer<typeof RequestFormSchema>>({
     resolver: zodResolver(RequestFormSchema),
     defaultValues: initialValues,
   });
+  const { startUpload } = useUploadThing("imageUploader");
 
-  function onSubmit(values: z.infer<typeof RequestFormSchema>) {
+  async function onSubmit(values: z.infer<typeof RequestFormSchema>) {
     // Handle form submission
 
-    console.log(values);
+    let uploadedImageUrl = values.imageUrl;
+
+    if (files.length > 0) {
+      const uploadedImages = await startUpload(files);
+      if (!uploadedImages) {
+        console.log("image not uploaded successfully");
+        return;
+      }
+
+      uploadedImageUrl = uploadedImages[0].url;
+
+      console.log("the values taken : ", {
+        values,
+        imageUrl: uploadedImageUrl,
+      });
+    }
+    if (type === "Create") {
+      try {
+        const newDonationRequest = await createDonationRequest({
+          RequestInfo: { ...values, imageUrl: uploadedImageUrl },
+          userId,
+          path: "/profile",
+        });
+        if (newDonationRequest) {
+          form.reset();
+          router.push(`/announcements/${newDonationRequest._id}`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (type === "Update") {
+      if (!postId) {
+        router.back();
+        return;
+      }
+
+      try {
+        const updatedPost = await updateDonationRequest({
+          userId,
+          post: { ...values, imageUrl: uploadedImageUrl, _id: postId },
+          path: `/announcements/${postId}`,
+        });
+
+        if (updatedPost) {
+          form.reset();
+          router.push(`/announcements/${updatedPost._id}`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
+        //onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-5"
       >
         <div className="flex flex-col gap-5 md:flex-row">
@@ -237,13 +308,14 @@ const EventForm = ({ userId, type }: EventFormProps) => {
         <Button
           type="submit"
           size="lg"
-          className="button col-span-2 w-full"
+          className="button col-span-2 w-full "
           disabled={form.formState.isSubmitting}
         >
           {form.formState.isSubmitting
             ? "Submitting ... "
             : `${type} your request`}
         </Button>
+        <button type="submit">submit</button>
       </form>
     </Form>
   );
