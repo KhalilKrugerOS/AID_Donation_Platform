@@ -3,8 +3,8 @@ import { Schema, model, models, Document } from "mongoose";
 export interface IDonation extends Document {
   createdAt: Date;
   stripeId: string;
-  totalAmount: string;
-  event: {
+  amountNeeded: string;
+  post: {
     _id: string;
     title: string;
   };
@@ -34,14 +34,14 @@ const DonationSchema = new Schema({
     required: true,
     unique: true,
   },
-  totalAmount: {
+  amountNeeded: {
     type: String,
   },
-  Post: {
+  post: {
     type: Schema.Types.ObjectId,
     ref: "Post",
   },
-  Donator: {
+  donator: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },

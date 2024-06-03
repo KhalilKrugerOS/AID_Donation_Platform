@@ -1,14 +1,16 @@
 "use server";
-import { CheckoutOrderParams, CreateOrderParams, GetOrdersByEventParams, GetOrdersByUserParams } from "@/types";
+
+
+import { CheckoutOrderParams, CreateDonationParams, GetDonationsByRequestParams, GetOrdersByUserParams } from "@/types";
 import { handleError } from "../utils";
 import { connectToDatabase } from "../database";
 import { ObjectId } from "mongodb";
-import { User } from "lucide-react";
 import Post from "../database/models/post.model";
-import donation from "../database/models/donation.model";
+import donation, { IDonation } from "../database/models/donation.model";
 import Stripe from "stripe";
 import { redirect } from "next/navigation";
 import Donation from "../database/models/donation.model";
+import User from "../database/models/user.model";
 
 export const checkoutDonation = async (donation: CheckoutOrderParams) => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -34,7 +36,8 @@ export const checkoutDonation = async (donation: CheckoutOrderParams) => {
                 donatorId: donation.donatorId,
             },
             mode: 'payment',
-            success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/profile/${donation.donatorId}`,
+            // TODO: check redirection
+            success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/Profil/`,
             cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/`,
         });
 
@@ -44,7 +47,10 @@ export const checkoutDonation = async (donation: CheckoutOrderParams) => {
     }
 }
 
-export const createDonation = async (donation: CreateOrderParams) => {
+export const createDonation = async (donation: CreateDonationParams) => {
+    console.log('the donation you provieded : \n');
+    console.log(donation);
+    console.log("plus" + donation.postId + "and" + donation.donatorId);
     try {
         await connectToDatabase();
 
@@ -53,6 +59,9 @@ export const createDonation = async (donation: CreateOrderParams) => {
             post: donation.postId,
             donator: donation.donatorId,
         });
+        console.log("the new donation is ");
+        console.log(newDonation);
+        console.log("\n\n")
 
         return JSON.parse(JSON.stringify(newDonation));
     } catch (error) {
@@ -61,51 +70,51 @@ export const createDonation = async (donation: CreateOrderParams) => {
 }
 
 // GET ORDERS BY EVENT
-export async function getOrdersByEvent({ searchString, eventId }: GetOrdersByEventParams) {
+export async function getDonationsByRequest({ searchString, postId }: GetDonationsByRequestParams) {
     try {
         await connectToDatabase()
 
-        if (!eventId) throw new Error('Event ID is required')
-        const eventObjectId = new ObjectId(eventId)
+        if (!postId) throw new Error('Event ID is required')
+        const postObjectId = new ObjectId(postId)
 
         const donations = await donation.aggregate([
             {
                 $lookup: {
                     from: 'users',
-                    localField: 'buyer',
+                    localField: 'donator',
                     foreignField: '_id',
-                    as: 'buyer',
+                    as: 'donator',
                 },
             },
             {
-                $unwind: '$buyer',
+                $unwind: '$donator',
             },
             {
                 $lookup: {
-                    from: 'events',
-                    localField: 'event',
+                    from: 'posts',
+                    localField: 'post',
                     foreignField: '_id',
-                    as: 'event',
+                    as: 'post',
                 },
             },
             {
-                $unwind: '$event',
+                $unwind: '$post',
             },
             {
                 $project: {
                     _id: 1,
-                    totalAmount: 1,
+                    neededAmount: 1,
                     createdAt: 1,
-                    eventTitle: '$event.title',
-                    eventId: '$event._id',
-                    buyer: {
-                        $concat: ['$buyer.firstName', ' ', '$buyer.lastName'],
+                    postTitle: '$post.title',
+                    postId: '$post._id',
+                    donator: {
+                        $concat: ['$donator.firstName', ' ', '$donator.lastName'],
                     },
                 },
             },
             {
                 $match: {
-                    $and: [{ eventId: eventObjectId }, { buyer: { $regex: RegExp(searchString, 'i') } }],
+                    $and: [{ postId: postObjectId }, { donator: { $regex: RegExp(searchString, 'i') } }],
                 },
             },
         ])
@@ -116,33 +125,32 @@ export async function getOrdersByEvent({ searchString, eventId }: GetOrdersByEve
     }
 }
 
-// GET DonationS BY USER
-// export async function getDonationsByUser({ userId, limit = 3, page }: GetOrdersByUserParams) {
-//     try {
-//         await connectToDatabase()
+// GET donations that a user has donated to
+export async function getDonationsByUser({ userId, limit = 3, page }: GetOrdersByUserParams) {
+    try {
+        await connectToDatabase()
 
-//         const skipAmount = (Number(page) - 1) * limit
-//         const conditions = { buyer: userId }
+        const skipAmount = (Number(page) - 1) * limit
+        const conditions = { donator: userId }
+        const donations: IDonation[] = await Donation.distinct('post._id')
+            .find(conditions)
+            .sort({ createdAt: 'desc' })
+            .skip(skipAmount)
+            .limit(limit)
+            .populate({
+                path: 'post',
+                model: Post,
+                populate: {
+                    path: 'Fundraiser_organisation',
+                    model: User,
+                    select: '_id firstName lastName',
+                },
+            });
 
-//         const Donations = await Donation.distinct('event._id')
-//             .find(conditions)
-//             .sort({ createdAt: 'desc' })
-//             .skip(skipAmount)
-//             .limit(limit)
-//             .populate({
-//                 path: 'Post',
-//                 model: Post,
-//                 populate: {
-//                     path: '',
-//                     model: User,
-//                     select: '_id firstName lastName',
-//                 },
-//             });
+        const DonationsCount = await donation.distinct('post._id').countDocuments(conditions)
 
-//         const DonationsCount = await donation.distinct('event._id').countDocuments(conditions)
-
-//         return { data: JSON.parse(JSON.stringify(Donations)), totalPages: Math.ceil(DonationsCount / limit) }
-//     } catch (error) {
-//         handleError(error)
-//     }
-// }
+        return { data: JSON.parse(JSON.stringify(donations)), totalPages: Math.ceil(DonationsCount / limit) }
+    } catch (error) {
+        handleError(error)
+    }
+}

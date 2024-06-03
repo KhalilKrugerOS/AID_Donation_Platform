@@ -10,6 +10,7 @@ const RequestDonationDetails = async ({ params: { id } }: SearchParamProps) => {
   console.log("id : ", id);
 
   const post = await getDonationRequestById(id);
+
   console.log("post info fetched is : from page" + post + "\n\n");
   console.log("post : ", post);
   return (
@@ -38,7 +39,8 @@ const RequestDonationDetails = async ({ params: { id } }: SearchParamProps) => {
               <p className="p-medium-18 ml-2 mt-2 sm:mt-0">
                 by{" "}
                 <span className="text-primary-500">
-                  {post.Fundraiser_organisation.firstName}{" "}
+                  {post.Fundraiser_organisation.firstName}
+                  {"  "}
                   {post.Fundraiser_organisation.lastName}
                 </span>
               </p>
@@ -61,7 +63,7 @@ const RequestDonationDetails = async ({ params: { id } }: SearchParamProps) => {
                   {formatDateTime(post.startDate).dateOnly} {" - "}
                   {formatDateTime(post.startDate).timeOnly}
                 </p>
-                {""}
+                {"  -- "}
                 <p>
                   {" "}
                   {formatDateTime(post.endDate).dateOnly} {" - "}

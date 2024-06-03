@@ -14,7 +14,7 @@ const Header = () => {
             src="/assets/images/logo.svg"
             width={128}
             height={38}
-            alt="teskerti logo"
+            alt="AID logo"
           />
         </Link>
 

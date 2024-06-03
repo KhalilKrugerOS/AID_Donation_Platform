@@ -25,8 +25,8 @@ export async function POST(request: Request) {
 
         const donation = {
             stripeId: id,
-            postId: metadata?.eventId || '',
-            donatorId: metadata?.buyerId || '',
+            postId: metadata?.postId || '',
+            donatorId: metadata?.donatorId || '',
             amountNeeded: amount_total ? (amount_total / 100).toString() : '0',
             createdAt: new Date(),
         }

@@ -108,7 +108,7 @@ export type CheckoutOrderParams = {
   donatorId: string;
 };
 
-export type CreateOrderParams = {
+export type CreateDonationParams = {
   stripeId: string;
   postId: string;
   donatorId: string;
@@ -116,8 +116,8 @@ export type CreateOrderParams = {
   createdAt: Date;
 };
 
-export type GetOrdersByEventParams = {
-  eventId: string;
+export type GetDonationsByRequestParams = {
+  postId: string;
   searchString: string;
 };
 
