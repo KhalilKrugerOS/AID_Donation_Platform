@@ -48,9 +48,6 @@ export const checkoutDonation = async (donation: CheckoutOrderParams) => {
 }
 
 export const createDonation = async (donation: CreateDonationParams) => {
-    console.log('the donation you provieded : \n');
-    console.log(donation);
-    console.log("plus" + donation.postId + "and" + donation.donatorId);
     try {
         await connectToDatabase();
 
@@ -146,6 +143,8 @@ export async function getDonationsByUser({ userId, limit = 3, page }: GetOrdersB
                     select: '_id firstName lastName',
                 },
             });
+        console.log("from get donations by user \n\n");
+        console.log(donations)
 
         const DonationsCount = await donation.distinct('post._id').countDocuments(conditions)
 
