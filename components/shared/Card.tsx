@@ -22,7 +22,7 @@ const Card = ({ post, hasOrderLink, hideAmount }: CardProps) => {
     <div className="group relative flex min-h-[300px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px]">
       <Link
         href={`/announcements/${post._id}`}
-        //style={{ backgroundImage: `url(${post.imageUrl})` }}
+        style={{ backgroundImage: `url(${post.imageUrl})` }}
         className="flex-center flex-grow bg-gray-50 bg-cover bg-center text-gray-500"
       />
       {/* is post creator */}
@@ -48,7 +48,7 @@ const Card = ({ post, hasOrderLink, hideAmount }: CardProps) => {
             {post.amountNeeded} TND
           </span>
           <p className="p-semibold-14 w-min rounded-full bg-gray-500/10 px-4 py-1 text-gray-500 line-clamp-1 ">
-            {/* {post.category.name} */}
+            {post.category.name}
           </p>
         </div>
         <p className="p-medium-18 text-gray-500">

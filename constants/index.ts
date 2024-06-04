@@ -9,13 +9,12 @@ export const headerLinks = [
   },
   {
     label: "My Profile",
-    route: "/profile",
+    route: "/Profil",
   },
   {
     label: "Funds",
     route: "/announcements",
   },
-
 ];
 
 export const eventDefaultValues = {
