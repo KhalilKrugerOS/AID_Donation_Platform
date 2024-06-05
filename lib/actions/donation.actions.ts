@@ -5,17 +5,22 @@ import { CheckoutOrderParams, CreateDonationParams, GetDonationsByRequestParams,
 import { handleError } from "../utils";
 import { connectToDatabase } from "../database";
 import { ObjectId } from "mongodb";
-import Post from "../database/models/post.model";
+import Post, { IPost } from "../database/models/post.model";
 import donation, { IDonation } from "../database/models/donation.model";
 import Stripe from "stripe";
 import { redirect } from "next/navigation";
 import Donation from "../database/models/donation.model";
 import User from "../database/models/user.model";
+import { getDonationRequestById, updateDonationRequest } from "./DonationRequest.actions";
+import { revalidatePath } from "next/cache";
 
 export const checkoutDonation = async (donation: CheckoutOrderParams) => {
+    console.log("donation checkout\n");
+    console.log(donation);
+    console.log("\n\n");
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-    const amountNeeded = Number(donation.amountNeeded) * 100;
+    const amountDonated = Number(donation.amountDonated) * 100;
 
     try {
         const session = await stripe.checkout.sessions.create({
@@ -23,7 +28,7 @@ export const checkoutDonation = async (donation: CheckoutOrderParams) => {
                 {
                     price_data: {
                         currency: 'usd',
-                        unit_amount: amountNeeded,
+                        unit_amount: amountDonated,
                         product_data: {
                             name: donation.postTitle
                         }
@@ -50,16 +55,33 @@ export const checkoutDonation = async (donation: CheckoutOrderParams) => {
 export const createDonation = async (donation: CreateDonationParams) => {
     try {
         await connectToDatabase();
+        console.log("donation before creation");
+        console.log({
+            ...donation,
+            post: donation.postId,
+            donator: donation.donatorId,
+        })
 
-        const newDonation = await Donation.create({
+        const newDonation: IDonation = await Donation.create({
             ...donation,
             post: donation.postId,
             donator: donation.donatorId,
         });
         console.log("the new donation is ");
         console.log(newDonation);
-        console.log("\n\n")
-
+        console.log("\n\n");
+        if (!newDonation) throw new Error("Failed to create donation");
+        const post = await getDonationRequestById(donation.postId)
+        console.log("updated post is :\n ")
+        console.log({ ...post, amountRecived: post.amountReceived + newDonation.amountDonated, category: post.categoryId },
+        );
+        console.log("\n\n");
+        const updatedPost = await Post.findByIdAndUpdate(
+            newDonation.post._id,
+            { ...post, amountReceived: post.amountReceived + newDonation.amountDonated, category: post.categoryId },
+            { new: true }
+        )
+        revalidatePath("/Profil");
         return JSON.parse(JSON.stringify(newDonation));
     } catch (error) {
         handleError(error);
