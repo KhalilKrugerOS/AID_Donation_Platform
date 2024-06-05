@@ -35,12 +35,79 @@ export async function getUserById(userId: string) {
     const totalPosts = await Post.countDocuments({
       Fundraiser_organisation: user._id,
     });
+
     const totalDonations = await Donation.countDocuments({ donator: user._id });
+
+    // Calculate the total amount donated by the user
+    const totalAmountDonatedResult = await Donation.aggregate([
+      { $match: { donator: user._id } },
+      {
+        $group: {
+          _id: null,
+          totalAmount: { $sum: "$amountDonated" },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          totalAmount: "$totalAmount",
+        },
+      },
+    ]);
+
+    const totalAmountDonated =
+      totalAmountDonatedResult.length > 0
+        ? totalAmountDonatedResult[0].totalAmount
+        : "0"; // Default to "0" as a string if no donations found
+
+    console.log("totalAmountDonatedResult:", totalAmountDonatedResult);
+    console.log("totalAmountDonated:", totalAmountDonated);
+
+    // Get all category names of posts the user has donated to
+    const donatedCategoriesResult = await Donation.aggregate([
+      { $match: { donator: user._id } },
+      {
+        $lookup: {
+          from: "posts",
+          localField: "post",
+          foreignField: "_id",
+          as: "postDetails",
+        },
+      },
+      { $unwind: "$postDetails" },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "postDetails.category",
+          foreignField: "_id",
+          as: "categoryDetails",
+        },
+      },
+      { $unwind: "$categoryDetails" },
+      {
+        $group: {
+          _id: "$categoryDetails._id",
+          categoryName: { $first: "$categoryDetails.name" },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          categoryName: 1,
+        },
+      },
+    ]);
+
+    const donatedCategories = donatedCategoriesResult.map(
+      (c) => c.categoryName
+    );
 
     return {
       user: JSON.parse(JSON.stringify(user)),
       totalPosts,
       totalDonations,
+      totalAmountDonated,
+      donatedCategories,
     };
   } catch (error) {
     handleError(error);

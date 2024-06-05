@@ -43,7 +43,13 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
   const userResponse = await getUserById(userId);
   const user = userResponse?.user;
   const totalPosts = userResponse?.totalPosts;
+  console.log("totalPosts" + totalPosts + "\n\n")
   const totalDonations = userResponse?.totalDonations;
+  console.log("totalDonations" + totalDonations + "\n\n")
+  const totalAmountDonated = userResponse?.totalAmountDonated;
+  console.log("totalAmountDonated" + totalAmountDonated + "\n\n")
+  const donatedCategories = userResponse?.donatedCategories;
+  console.log("donatedCategories" + donatedCategories + "\n\n")
 
   const donationsPage = Number(searchParams?.donationsPage) || 1;
   const postsPage = Number(searchParams?.postsPage) || 1;
@@ -207,8 +213,8 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
                   <p className="paragraph-semibold text-dark200_light900">
 
                   </p>
-                  <p className="body-medium text-dark400_light700">Total Posts</p>
-                  <p>{totalPosts}</p>
+                  <p className="body-medium text-dark400_light700">Total Donations</p>
+                  <p>{totalDonations}</p>
                 </div>
 
                 {/* Answers */}
@@ -216,8 +222,8 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
                   <p className="paragraph-semibold text-dark200_light900">
 
                   </p>
-                  <p className="body-medium text-dark400_light700">Total Donations</p>
-                  <p>{totalDonations}</p>
+                  <p className="body-medium text-dark400_light700">Total Amount</p>
+                  <p>{totalAmountDonated}</p>
                 </div>
               </div>
 
