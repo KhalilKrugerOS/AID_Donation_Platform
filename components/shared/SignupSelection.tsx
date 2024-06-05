@@ -18,7 +18,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
-import { CategorieSchema } from "@/lib/validator"; // Adjust the import to match your schema location
+import { EditProfileSchema } from "@/lib/validator"; // Adjust the import to match your schema location
 
 const SignupSelection = ({ userId }: { userId: string }) => {
     const router = useRouter();
@@ -33,17 +33,19 @@ const SignupSelection = ({ userId }: { userId: string }) => {
         fetchUserInfo();
     }, [userId]);
 
-    const form = useForm<z.infer<typeof CategorieSchema>>({
-        resolver: zodResolver(CategorieSchema),
+    const form = useForm<z.infer<typeof EditProfileSchema>>({
+        resolver: zodResolver(EditProfileSchema),
         defaultValues: {
             phoneNumber: userInfo?.phoneNumber || "",
             bio: userInfo?.bio || "",
             location: userInfo?.location || "",
             category: userInfo?.category || "", // Changed to reflect single selection
+            socialMediaLink: userInfo?.socialMediaLink || "",
+
         },
     });
 
-    const onSubmit = async (data: z.infer<typeof CategorieSchema>) => {
+    const onSubmit = async (data: z.infer<typeof EditProfileSchema>) => {
         // Handle form submission
         console.log(data);
         // Add your submission logic here, e.g., updating the user info in the database

@@ -47,29 +47,10 @@ export const EditProfileSchema = z.object({
     .max(400, {
       message: "Emplacement must be at most 400 characters.",
     }),
-});
-
-export const CategorieSchema = z.object({
-  phoneNumber: z.string().min(10, {
-    message: "Numéro de Téléphone must be at least 10 characters.",
-  }),
-  bio: z
-    .string()
-    .min(3, {
-      message: "BIO must be at least 3 characters.",
-    })
-    .max(400, {
-      message: "BIO must be at most 400 characters.",
-    }),
-  location: z
-    .string()
-    .min(3, {
-      message: "Emplacement must be at least 3 characters.",
-    })
-    .max(400, {
-      message: "Emplacement must be at most 400 characters.",
-    }),
   category: z.string().nonempty({
     message: "A category must be selected.",
+  }),
+  socialMediaLink: z.string().url({
+    message: "Invalid URL format for social media link.",
   }),
 });

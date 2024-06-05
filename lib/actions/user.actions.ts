@@ -1,6 +1,11 @@
 "use server";
 
-import { CreateUserParams, UpdateUserParams, GetAllUsersParams } from "@/types";
+import {
+  CreateUserParams,
+  UpdateUserParams,
+  UpdateUserParamsEdit,
+  GetAllUsersParams,
+} from "@/types";
 import { connectToDatabase } from "../database";
 import { handleError } from "../utils";
 import User from "@/lib/database/models/user.model";
@@ -53,6 +58,27 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
     return JSON.parse(JSON.stringify(updatedUser));
   } catch (error) {
     handleError(error);
+  }
+}
+
+export async function updateUserEdit(params: UpdateUserParamsEdit) {
+  try {
+    await connectToDatabase();
+
+    const { clerkId, updateData, path } = params;
+
+    const updatedUser = await User.findOneAndUpdate({ clerkId }, updateData, {
+      new: true,
+    });
+
+    if (!updatedUser) {
+      throw new Error(`User with clerkId ${clerkId} not found`);
+    }
+
+    revalidatePath(path);
+  } catch (error) {
+    console.error(`Error updating user: ${error}`);
+    throw error;
   }
 }
 

@@ -170,7 +170,7 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
             </div>
             <div className="flex jusitify-end max-sm:mb-5 max-sm:w-full sm:mt-3">
               {/* if signed in add clerk edit */}
-              <Link href="/signupOrg">
+              <Link href="/Profil/edit">
                 {/* edit profile ref */}
                 <Button className="mt-20 paragraph-medium btn-secondary min-h-[46px] min-w-[175px]">
                   Modifier le profil

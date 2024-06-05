@@ -1,3 +1,5 @@
+import { IUser } from "@/lib/database/models/user.model";
+
 // ====== USER PARAMS
 export type CreateUserParams = {
   clerkId: string;
@@ -7,6 +9,16 @@ export type CreateUserParams = {
   email: string;
   photo: string;
 };
+
+export interface ParamsProps {
+  params: { id: string };
+}
+
+export interface UpdateUserParamsEdit {
+  clerkId: string;
+  updateData: Partial<IUser>;
+  path: string;
+}
 
 export type UpdateUserParams = {
   firstName: string;
