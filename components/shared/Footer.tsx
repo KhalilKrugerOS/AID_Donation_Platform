@@ -111,18 +111,18 @@ const Footer = () => {
                 <ul>
                   <li>
                     <Link
-                      href="/blog"
+                      href="/announcements"
                       className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
-                     Associations
+                     Funds
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/"
+                      href="/international"
                       className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
-                      Pricing
+                      Internationale
                     </Link>
                   </li>
                   <li>
