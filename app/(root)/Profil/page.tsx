@@ -20,6 +20,11 @@ interface StatsCardProps {
   title: string;
 }
 
+interface Props {
+  totalPosts: number;
+  totalBadges: number;
+}
+
 const StatsCard = ({ imgUrl, value, title }: StatsCardProps) => {
   return (
     <div className="light-border background-light900_dark300 flex flex-wrap items-center justify-start gap-4 rounded-md border p-6 shadow-light-300 dark:shadow-dark-200">
@@ -35,7 +40,10 @@ const StatsCard = ({ imgUrl, value, title }: StatsCardProps) => {
 const ProfilePage = async ({ searchParams }: SearchParamProps) => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
-  const userInfo = await getUserById(userId);
+  const userResponse = await getUserById(userId);
+  const user = userResponse?.user;
+  const totalPosts = userResponse?.totalPosts;
+  const totalDonations = userResponse?.totalDonations;
 
   const donationsPage = Number(searchParams?.donationsPage) || 1;
   const postsPage = Number(searchParams?.postsPage) || 1;
@@ -73,7 +81,7 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
             <div className="relative flex flex-col items-start gap-4 lg:flex-row">
               <div className="relative w-36 h-36"> {/* Ensure the container is square */}
                 <Image
-                  src={userInfo.photo}
+                  src={user.photo}
                   alt="Profile Picture"
                   layout="fill"
                   objectFit="cover"
@@ -114,39 +122,39 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
               </div>
 
               <div className="mt-3">
-                <h2 className="font-bold mb-1.5 text-2xl font-semibold text-black dark:text-white">{userInfo.firstName} {userInfo.lastName} </h2>
-                <p className="font-bold">@{userInfo.username}</p>
+                <h2 className="font-bold mb-1.5 text-2xl font-semibold text-black dark:text-white">{user.firstName} {user.lastName} </h2>
+                <p className="font-bold">@{user.username}</p>
 
                 <div className="mt-5 flex flex-wrap items-center justify-start gap-5">
                   {/* Location */}
-                  {userInfo.location && (
+                  {user.location && (
                     <ProfileLink
                       imgUrl="/assets/images/location.svg"
-                      title={userInfo.location}
+                      title={user.location}
                     />
                   )}
 
                   {/* Portfolio Website */}
-                  {userInfo.socialMediaLink && (
+                  {user.socialMediaLink && (
                     <ProfileLink
                       imgUrl="/assets/images/link.svg"
-                      href={userInfo.socialMediaLink}
-                      title={userInfo.socialMediaLink}
+                      href={user.socialMediaLink}
+                      title={user.socialMediaLink}
                     />
                   )}
 
                   {/* Joined Date */}
                   <ProfileLink
                     imgUrl="/assets/images/calendar.svg"
-                    title={getJoinedDate(userInfo.joinedAt)}
+                    title={getJoinedDate(user.joinedAt)}
                   />
                 </div>
                 <div className="mt-6 pl-10 mx-auto max-w-180  text-center">
                   <h4 className="font-semibold text-black dark:text-white">
                     À propos de moi
                   </h4>
-                  {userInfo.bio && (
-                    <>{userInfo.bio}</>
+                  {user.bio && (
+                    <>{user.bio}</>
                   )}
 
                 </div>
@@ -200,6 +208,7 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
 
                   </p>
                   <p className="body-medium text-dark400_light700">Total Posts</p>
+                  <p>{totalPosts}</p>
                 </div>
 
                 {/* Answers */}
@@ -207,7 +216,8 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
                   <p className="paragraph-semibold text-dark200_light900">
 
                   </p>
-                  <p className="body-medium text-dark400_light700">Total Badges</p>
+                  <p className="body-medium text-dark400_light700">Total Donations</p>
+                  <p>{totalDonations}</p>
                 </div>
               </div>
 

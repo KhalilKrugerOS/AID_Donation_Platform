@@ -17,6 +17,7 @@ export const createUser = async (user: CreateUserParams) => {
     handleError(error);
   }
 };
+
 export async function getUserById(userId: string) {
   try {
     await connectToDatabase();
@@ -24,7 +25,17 @@ export async function getUserById(userId: string) {
     const user = await User.findById(userId);
 
     if (!user) throw new Error("User not found");
-    return JSON.parse(JSON.stringify(user));
+
+    const totalPosts = await Post.countDocuments({
+      Fundraiser_organisation: user._id,
+    });
+    const totalDonations = await Donation.countDocuments({ donator: user._id });
+
+    return {
+      user: JSON.parse(JSON.stringify(user)),
+      totalPosts,
+      totalDonations,
+    };
   } catch (error) {
     handleError(error);
   }
