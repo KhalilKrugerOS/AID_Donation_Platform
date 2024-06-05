@@ -12,6 +12,7 @@ import User from "@/lib/database/models/user.model";
 import Post from "@/lib/database/models/post.model";
 import Donation from "@/lib/database/models/donation.model";
 import { revalidatePath } from "next/cache";
+import { AnyARecord } from "dns";
 
 export const createUser = async (user: CreateUserParams) => {
   try {
@@ -125,7 +126,7 @@ export async function getAllUsers(params: GetAllUsersParams) {
     const { page = 1, pageSize = 20, filter, searchQuery } = params;
 
     // Construct the query object
-    const query: {} = {};
+    const query: any = {};
     if (searchQuery) {
       query.$or = [
         { name: { $regex: searchQuery, $options: "i" } },
