@@ -17,8 +17,9 @@ export interface IUser extends Document {
   password?: String;
   phoneNumber?: String;
   bio?: String;
-  picture: String;
+  photo: String;
   location?: String;
+  donatedMoney: Number;
   socialMediaLink?: String;
   reputation?: Number;
   saved: Schema.Types.ObjectId[];
