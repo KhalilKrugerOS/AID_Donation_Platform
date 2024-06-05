@@ -9,7 +9,7 @@ import Pagination from '@/components/shared/Pagination';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Community | Dev Overflow'
+    title: 'Community | AID Association'
 };
 
 const Community = async ({ searchParams }: SearchParamProps) => {
@@ -19,9 +19,17 @@ const Community = async ({ searchParams }: SearchParamProps) => {
         page: searchParams.page ? +searchParams.page : 1
     });
 
+    const { totalUsers, users, isNext } = result;
+    console.log(totalUsers);
+
     return (
         <>
             <h1 className="h1-bold text-dark100_light900">Our Community</h1>
+
+            {/* Display total number of users */}
+            <div className="mt-2">
+                <p className="text-gray-600">Total users: {totalUsers}</p>
+            </div>
 
             <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
                 <LocalSearchbar
@@ -39,8 +47,8 @@ const Community = async ({ searchParams }: SearchParamProps) => {
             </div>
 
             <section className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {result.users.length > 0 ? (
-                    result.users.map((user) => (
+                {users.length > 0 ? (
+                    users.map((user) => (
                         <UserCard key={user._id} user={user} />
                     ))
                 ) : (
@@ -60,10 +68,11 @@ const Community = async ({ searchParams }: SearchParamProps) => {
             <div className="mt-10">
                 <Pagination
                     pageNumber={searchParams?.page ? +searchParams.page : 1}
-                    isNext={result.isNext}
+                    isNext={isNext}
                 />
             </div>
         </>
     );
 };
+
 export default Community;

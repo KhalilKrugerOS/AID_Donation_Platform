@@ -123,8 +123,9 @@ export async function getAllUsers(params: GetAllUsersParams) {
     await connectToDatabase();
 
     const { page = 1, pageSize = 20, filter, searchQuery } = params;
+
     // Construct the query object
-    const query: any = {};
+    const query: {} = {};
     if (searchQuery) {
       query.$or = [
         { name: { $regex: searchQuery, $options: "i" } },
@@ -145,12 +146,15 @@ export async function getAllUsers(params: GetAllUsersParams) {
         break;
     }
 
-    const users = await User.find(query).sort(sortOptions);
+    const users = await User.find(query)
+      .sort(sortOptions)
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
 
     const totalUsers = await User.countDocuments(query);
     const isNext = totalUsers > page * pageSize;
 
-    return { users, isNext };
+    return { users, isNext, totalUsers };
   } catch (error) {
     console.log(error);
     throw error;
