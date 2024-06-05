@@ -8,12 +8,16 @@ export const headerLinks = [
     route: "/announcements/create",
   },
   {
-    label: "My Profile",
-    route: "/Profil",
-  },
-  {
     label: "Funds",
     route: "/announcements",
+  },
+  {
+    label: "Community",
+    route: "/community",
+  },
+  {
+    label: "My Profile",
+    route: "/Profil",
   },
 ];
 

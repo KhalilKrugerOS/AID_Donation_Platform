@@ -1,6 +1,6 @@
 "use server";
 
-import { CreateUserParams, UpdateUserParams } from "@/types";
+import { CreateUserParams, UpdateUserParams, GetAllUsersParams } from "@/types";
 import { connectToDatabase } from "../database";
 import { handleError } from "../utils";
 import User from "@/lib/database/models/user.model";
@@ -89,5 +89,44 @@ export async function deleteUser(clerkId: string) {
     return deletedUser ? JSON.parse(JSON.stringify(deletedUser)) : null;
   } catch (error) {
     handleError(error);
+  }
+}
+
+export async function getAllUsers(params: GetAllUsersParams) {
+  try {
+    await connectToDatabase();
+
+    const { page = 1, pageSize = 20, filter, searchQuery } = params;
+    // Construct the query object
+    const query: any = {};
+    if (searchQuery) {
+      query.$or = [
+        { name: { $regex: searchQuery, $options: "i" } },
+        { email: { $regex: searchQuery, $options: "i" } },
+      ];
+    }
+
+    let sortOptions = {};
+
+    switch (filter) {
+      case "new_users":
+        sortOptions = { joinedAt: -1 };
+        break;
+      case "old_users":
+        sortOptions = { joinedAt: 1 };
+        break;
+      default:
+        break;
+    }
+
+    const users = await User.find(query).sort(sortOptions);
+
+    const totalUsers = await User.countDocuments(query);
+    const isNext = totalUsers > page * pageSize;
+
+    return { users, isNext };
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 }
