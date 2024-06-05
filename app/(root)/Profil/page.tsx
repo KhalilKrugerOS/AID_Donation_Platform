@@ -9,7 +9,7 @@ import Collections from "@/components/shared/Collections";
 import { getDonationRequestById } from "@/lib/actions/DonationRequest.actions";
 import Image from "next/image";
 import { getJoinedDate } from '@/lib/utils';
-import { URLProps } from '@/types/index.d';
+import { BadgeCounts, URLProps } from '@/types/index.d';
 import ProfileLink from "@/components/shared/ProfileLinks";
 import { FaPlus } from 'react-icons/fa';
 import { getUserById } from "@/lib/actions/user.actions";
@@ -22,7 +22,10 @@ interface StatsCardProps {
 
 interface Props {
   totalPosts: number;
-  totalBadges: number;
+  totalDonations: number;
+  totalAmountDonated: number;
+  donatedCategories: string[];
+  badges: BadgeCounts; // Add badge counts to Props interface
 }
 
 const StatsCard = ({ imgUrl, value, title }: StatsCardProps) => {
@@ -42,8 +45,8 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
   const userId = sessionClaims?.userId as string;
   const userResponse = await getUserById(userId);
   const user = userResponse?.user;
-  const totalPosts = userResponse?.totalPosts;
-  console.log("totalPosts" + totalPosts + "\n\n")
+  // const totalPosts = userResponse?.totalPosts;
+  // console.log("totalPosts" + totalPosts + "\n\n")
   const totalDonations = userResponse?.totalDonations;
   console.log("totalDonations" + totalDonations + "\n\n")
   const totalAmountDonated = userResponse?.totalAmountDonated;
@@ -166,6 +169,8 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
                 </div>
               </div>
             </div>
+
+
             <div className="flex justify-end max-sm:mb-5 max-sm:w-full sm:mt-3">
               <Link href="/announcements/create">
                 <Button className="mt-20 flex items-center paragraph-medium bg-gray-500 text-white min-h-[46px] min-w-[175px] hover:bg-gray-600">
@@ -186,6 +191,8 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
           </div>
         </div>
 
+
+
         {/* Box under information */}
         <div style={{
           border: '2px solid #ccc', // Couleur et épaisseur de la bordure
@@ -194,15 +201,10 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
           boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',// Ombre
           marginTop: '20px' // Marge en haut
         }}>
-          <h4 className="font-semibold text-black dark:text-white mb-4">Badges et Certifications</h4>
-          {/* Add content for the box here */}
-
-
-
 
 
           <div className="mt-10">
-            <h4 className="h3-semibold text-dark200_light900">
+            <h4 className="font-semibold text-dark200_light900">
               Stats
             </h4>
 
@@ -227,7 +229,7 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
                 </div>
               </div>
 
-              <StatsCard
+              {/* <StatsCard
                 imgUrl="/assets/images/gold-medal.svg"
                 value={0}
                 title="Donneur Fidèle"
@@ -243,8 +245,33 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
                 imgUrl="/assets/images/bronze-medal.svg"
                 value={0}
                 title="Donneur Régulier"
-              />
+              /> */}
             </div>
+          </div>
+
+
+
+
+          <h4 className="font-semibold text-black dark:text-white mb-4">Badges et Certifications</h4>
+          {/* Add content for the box here */}
+
+
+          <div className="mt-5 grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-4">
+            {/* Filter badges with count > 0 and map over them */}
+            {userResponse && Object.entries(userResponse.badges).map(([badgeType, count]) => {
+              console.log(userResponse.badges)
+              if (count > 0) {
+                return (
+                  <StatsCard
+                    key={badgeType}
+                    imgUrl={`/assets/images/${badgeType.toLowerCase()}-medal.svg`}
+                    value={count}
+                    title={badgeType}
+                  />
+                );
+              }
+              return null;
+            })}
           </div>
 
 

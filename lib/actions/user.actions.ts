@@ -7,12 +7,13 @@ import {
   GetAllUsersParams,
 } from "@/types";
 import { connectToDatabase } from "../database";
-import { handleError } from "../utils";
+import { BadgeCounts, assignBadges, handleError } from "../utils";
 import User from "@/lib/database/models/user.model";
 import Post from "@/lib/database/models/post.model";
 import Donation from "@/lib/database/models/donation.model";
 import { revalidatePath } from "next/cache";
 import { AnyARecord } from "dns";
+import { BadgeCriteria, BadgeCriteriaType } from "@/types/index.d";
 
 export const createUser = async (user: CreateUserParams) => {
   try {
@@ -26,19 +27,16 @@ export const createUser = async (user: CreateUserParams) => {
 
 export async function getUserById(userId: string) {
   try {
-    await connectToDatabase();
+    connectToDatabase(); // Assuming this function establishes the database connection
 
     const user = await User.findById(userId);
 
-    if (!user) throw new Error("User not found");
+    if (!user) {
+      throw new Error("User not found");
+    }
 
-    const totalPosts = await Post.countDocuments({
-      Fundraiser_organisation: user._id,
-    });
-
+    // Fetch user's donation-related statistics
     const totalDonations = await Donation.countDocuments({ donator: user._id });
-
-    // Calculate the total amount donated by the user
     const totalAmountDonatedResult = await Donation.aggregate([
       { $match: { donator: user._id } },
       {
@@ -54,11 +52,10 @@ export async function getUserById(userId: string) {
         },
       },
     ]);
-
     const totalAmountDonated =
       totalAmountDonatedResult.length > 0
         ? totalAmountDonatedResult[0].totalAmount
-        : "0"; // Default to "0" as a string if no donations found
+        : 0;
 
     console.log("totalAmountDonatedResult:", totalAmountDonatedResult);
     console.log("totalAmountDonated:", totalAmountDonated);
@@ -102,12 +99,34 @@ export async function getUserById(userId: string) {
       (c) => c.categoryName
     );
 
+    const criteria: BadgeCriteria[] = [
+      {
+        type: "TOTAL_DONATION_AMOUNT",
+        count: totalAmountDonated,
+      },
+      {
+        type: "NUMBER_OF_DONATIONS",
+        count: totalDonations,
+      },
+      {
+        type: "SPECIFIC_CAMPAIGN",
+        campaigns: donatedCategories,
+      },
+      // Add more criteria if needed
+    ];
+
+    const badges = assignBadges({
+      criteria: criteria.map((c) =>
+        c.type === "SPECIFIC_CAMPAIGN" ? { ...c, count: 0 } : c
+      ),
+    });
+
     return {
       user: JSON.parse(JSON.stringify(user)),
-      totalPosts,
       totalDonations,
       totalAmountDonated,
       donatedCategories,
+      badges,
     };
   } catch (error) {
     handleError(error);
