@@ -6,12 +6,12 @@ export const RequestFormSchema = z.object({
     }),
     description: z.string().min(3, {
         message: "description must be at least 3 characters.",
-    }).max(400, {
+    }).max(2000, {
         message: "description must be at most 400 characters.",
     }),
     location: z.string().min(3, {
         message: "location must be at least 3 characters.",
-    }).max(400, {
+    }).max(100, {
         message: "location must be at most 400 characters.",
     }),
     imageUrl: z.string(),
@@ -20,3 +20,9 @@ export const RequestFormSchema = z.object({
     categoryId: z.string(),
     amountNeeded: z.string()
 });
+
+
+export const DonateFormSchema = z.object({
+    amountDonated: z.string()
+});
+

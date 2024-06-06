@@ -21,13 +21,18 @@ export async function POST(request: Request) {
 
     // CREATE
     if (eventType === 'checkout.session.completed') {
-        const { id, amount_total, metadata } = event.data.object
+        const { id, amount_total, metadata } = event.data.object;
+
+        console.log("about route stripe : \netadata : ")
+        console.log(metadata);
+        console.log("amount_total : ", amount_total)
+        console.log("id : ", id);
 
         const donation = {
             stripeId: id,
-            postId: metadata?.eventId || '',
-            donatorId: metadata?.buyerId || '',
-            amountNeeded: amount_total ? (amount_total / 100).toString() : '0',
+            postId: metadata?.postId || '',
+            donatorId: metadata?.donatorId || '',
+            amountDonated: amount_total ? (amount_total / 100).toString() : '0',
             createdAt: new Date(),
         }
 

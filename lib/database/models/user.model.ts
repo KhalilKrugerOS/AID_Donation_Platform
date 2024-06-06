@@ -10,8 +10,8 @@ import { Schema, models, model, Document } from "mongoose";
  */
 export interface IUser extends Document {
   clerkId: String;
-  firstname: String;
-  lasttname: String;
+  firstName: String;
+  lastName: String;
   username: String;
   email: String;
   password?: String;
@@ -35,6 +35,7 @@ const UserSchema = new Schema({
   PhoneNumber: { type: Number },
   bio: { type: String },
   photo: { type: String, required: true },
+  donatedMoney: { type: Number, default: 0 },
   location: { type: String },
   socialMediaLink: { type: String },
   reputation: { type: Number, default: 0 },
