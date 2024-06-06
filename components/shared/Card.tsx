@@ -13,8 +13,6 @@ type CardProps = {
 };
 
 const Card = ({ post, hasOrderLink, hideAmount }: CardProps) => {
-  console.log("from card");
-  console.log(post);
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
   // TODO: check the post man
@@ -22,7 +20,7 @@ const Card = ({ post, hasOrderLink, hideAmount }: CardProps) => {
     post?.donator?._id.toString() === userId ||
     post?.Fundraiser_organisation._id.toString() === userId;
   return (
-    <div className="group relative flex min-h-[300px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px]">
+    <div className="group relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px]">
       <Link
         href={`/announcements/${post._id}`}
         style={{ backgroundImage: `url(${post.imageUrl})` }}
@@ -50,16 +48,21 @@ const Card = ({ post, hasOrderLink, hideAmount }: CardProps) => {
           <span className="p-semibold-14 w-min rounded-full bg-green-100 px-4 py-1 text-green-60">
             {post.amountNeeded} TND
           </span>
-          <p className="p-semibold-14 w-min rounded-full bg-gray-500/10 px-4 py-1 text-gray-500 line-clamp-1 ">
-            {/* {post.category.name} */}
+          <p className=" flex items-center p-semibold-14 w-min rounded-full bg-gray-500/10 px-4 py-1 text-gray-700 line-clamp-1 ">
+            {post.category.name}
           </p>
         </div>
         <p className="p-medium-18 text-gray-500">
           {formatDateTime(post.startDate).dateTime}
         </p>
-        <p className="p-medium-16 md:p-medium-20 line-clamp-2 flex-1 text-black">
-          {post.title}
-        </p>
+        <div className="flex flex-row gap-2 items-center">
+          <p className="p-medium-20 md:p-medium-20 line-clamp-2 flex-1 text-black">
+            {post.title}
+          </p>
+          <p className="p-bold-20 rounded-full bg-green-500/10 px-5 py-2 text-green-700 w-fit">
+            {post.amountNeeded} TND
+          </p>
+        </div>
         <div className="flex-between w-full">
           <p className="p-medium-14 md:p-medium-16 text-grey-600 ">
             {post.Fundraiser_organisation.firstName}{" "}

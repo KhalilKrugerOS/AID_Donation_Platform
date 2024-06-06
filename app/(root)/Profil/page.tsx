@@ -14,6 +14,7 @@ import {
   getDonationRequestById,
   getEventsByUser,
 } from "@/lib/actions/DonationRequest.actions";
+import { getUserById } from "@/lib/actions/user.actions";
 
 const ProfilePage = async ({ searchParams }: SearchParamProps) => {
   const { sessionClaims } = auth();
@@ -26,6 +27,7 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
     userId,
     page: donationsPage,
   });
+  const loginUser = await getUserById(userId);
   const donationPosts =
     my_donations?.data.map((donation: IDonation) => donation.post) || [];
   // console.log("donation posts\n");
@@ -36,9 +38,6 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
     userId,
     page: postsPage,
   });
-  console.log("organizedFunds\n");
-  console.log(organizedFunds);
-  console.log("\n\n");
 
   return (
     <>
@@ -46,9 +45,14 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
       <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
         <div className="wrapper flex items-center justify-center sm:justify-between">
           <h3 className="h3-bold text-center sm:text-left">My Donations :💛</h3>
-          <Button asChild size="lg" className="button hidden sm:flex">
-            <Link href="/announcements">
-              Explore Our Community{" "}
+          <Button
+            asChild
+            size="lg"
+            className="button hidden sm:flex"
+            disabled={loginUser.donatedMoney < 100}
+          >
+            <Link href="/License">
+              Claim your certificate{" "}
               <Image
                 style={{ marginLeft: "0.3rem" }}
                 src="/assets/images/network-1-svgrepo-com.svg"

@@ -1,0 +1,56 @@
+.certificate {
+  width: 800px;
+  height: 450px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  margin-left: 100px;
+}
+
+.certificate-header {
+  text-align: center;
+}
+
+.logo {
+  width: 100px; /* Taille du logo */
+}
+
+.certificate-body {
+  text-align: center;
+}
+
+.certificate-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.certificate-content {
+  margin-top: 20px;
+}
+
+.signature {
+  margin-top: -8px;
+  text-align: center;
+  position: relative;
+}
+
+.signature img {
+  width: 300px;
+  height: auto;
+}
+
+.signature-date {
+  color: black;
+  margin-top: -40px;
+  font-size: 16px;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  text-align: center;
+  top: 100%;
+  text-align: left;
+}

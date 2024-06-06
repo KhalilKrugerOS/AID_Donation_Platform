@@ -79,7 +79,7 @@ const EventForm = ({ userId, type, post, postId }: EventFormProps) => {
         const newDonationRequest = await createDonationRequest({
           RequestInfo: { ...values, imageUrl: uploadedImageUrl },
           userId,
-          path: "/profile",
+          path: "/Profil",
         });
         if (newDonationRequest) {
           form.reset();

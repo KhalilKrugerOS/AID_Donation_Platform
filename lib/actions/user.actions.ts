@@ -29,7 +29,6 @@ export async function getUserById(userId: string) {
     handleError(error);
   }
 }
-
 export async function updateUser(clerkId: string, user: UpdateUserParams) {
   try {
     await connectToDatabase();

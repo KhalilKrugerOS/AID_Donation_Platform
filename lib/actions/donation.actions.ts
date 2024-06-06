@@ -13,6 +13,7 @@ import Donation from "../database/models/donation.model";
 import User from "../database/models/user.model";
 import { getDonationRequestById, updateDonationRequest } from "./DonationRequest.actions";
 import { revalidatePath } from "next/cache";
+import { getUserById } from "./user.actions";
 
 export const checkoutDonation = async (donation: CheckoutOrderParams) => {
     console.log("donation checkout\n");
@@ -62,7 +63,7 @@ export const createDonation = async (donation: CreateDonationParams) => {
             donator: donation.donatorId,
         })
 
-        const newDonation: IDonation = await Donation.create({
+        const newDonation: any = await Donation.create({
             ...donation,
             post: donation.postId,
             donator: donation.donatorId,
@@ -79,6 +80,17 @@ export const createDonation = async (donation: CreateDonationParams) => {
         const updatedPost = await Post.findByIdAndUpdate(
             newDonation.post._id,
             { ...post, amountReceived: post.amountReceived + newDonation.amountDonated, category: post.categoryId },
+            { new: true }
+        )
+        const user = await getUserById(donation.donatorId);
+
+        console.log("updated user is :\n ")
+        console.log({ ...user, donatedMoney: user.donatedMoney + newDonation.amountDonated },
+        );
+        console.log("\n\n");
+        const updatedUser = await User.findByIdAndUpdate(
+            newDonation.donator,
+            { ...user, donatedMoney: user.donatedMoney + newDonation.amountDonated },
             { new: true }
         )
         revalidatePath("/Profil");
