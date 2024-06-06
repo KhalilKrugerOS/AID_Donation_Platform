@@ -21,6 +21,7 @@ export interface IUser extends Document {
   location?: String;
   socialMediaLink?: String;
   reputation?: Number;
+  category?: String;
   saved: Schema.Types.ObjectId[];
   joinedAt: Date;
 }
@@ -39,6 +40,7 @@ const UserSchema = new Schema({
   location: { type: String },
   socialMediaLink: { type: String },
   reputation: { type: Number, default: 0 },
+  category: { type: String },
   saved: [{ type: Schema.Types.ObjectId, ref: "Post" }],
   joinedAt: { type: Date, default: Date.now },
 });

@@ -1,3 +1,5 @@
+import { IUser } from "@/lib/database/models/user.model";
+
 // ====== USER PARAMS
 export type CreateUserParams = {
   clerkId: string;
@@ -7,6 +9,16 @@ export type CreateUserParams = {
   email: string;
   photo: string;
 };
+
+export interface ParamsProps {
+  params: { id: string };
+}
+
+export interface UpdateUserParamsEdit {
+  clerkId: string;
+  updateData: Partial<IUser>;
+  path: string;
+}
 
 export type UpdateUserParams = {
   firstName: string;
@@ -143,3 +155,10 @@ export type SearchParamProps = {
   params: { id: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
+
+export interface GetAllUsersParams {
+  page?: number;
+  pageSize?: number;
+  filter?: string;
+  searchQuery?: string; // Add searchQuery parameter
+}

@@ -8,14 +8,17 @@ export const headerLinks = [
     route: "/announcements/create",
   },
   {
-    label: "My Profile",
-    route: "/profile",
-  },
-  {
     label: "Funds",
     route: "/announcements",
   },
-
+  {
+    label: "Community",
+    route: "/community",
+  },
+  {
+    label: "My Profile",
+    route: "/Profil",
+  },
 ];
 
 export const eventDefaultValues = {

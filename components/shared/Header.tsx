@@ -11,9 +11,9 @@ const Header = () => {
       <div className="wrapper flex items-center justify-between">
         <Link href="/" className="w-36 ">
           <Image
-            src="/assets/images/next.svg"
-            width={50}
-            height={20}
+            src="/assets/images/logo.png"
+            width={120}
+            height={100}
             alt="AID logo"
           />
         </Link>

@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 import qs from "query-string";
 
 import { UrlQueryParams, RemoveUrlQueryParams } from "@/types";
+import { BADGE_CRITERIA } from "@/constants/constants";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -104,13 +105,71 @@ export const handleError = (error: unknown) => {
   throw new Error(typeof error === "string" ? error : JSON.stringify(error));
 };
 
-
 export const getJoinedDate = (date: Date): string => {
   // Extract the month and year from the Date object
-  const month = date.toLocaleString("default", { month: "long" });
-  const year = date.getFullYear();
+  const currentDate = new Date();
+  const month = currentDate.toLocaleString("default", { month: "long" });
+  const year = currentDate.getFullYear();
   // Create the joined date string (e.g., "September 2023")
   const joinedDate = `${month} ${year}`;
 
   return joinedDate;
+};
+
+export interface BadgeParam {
+  criteria: {
+    type: keyof typeof BADGE_CRITERIA;
+    count: number;
+  }[];
+}
+
+export interface BadgeCounts {
+  BRONZE: number;
+  SILVER: number;
+  GOLD: number;
+  PLATINUM?: number;
+  DIAMOND?: number;
+  FREQUENT?: number;
+  REGULAR?: number;
+  DEDICATED?: number;
+  HEALTH?: number;
+  ANIMAUX?: number;
+  environnement?: number;
+}
+
+export const assignBadges = (params: BadgeParam): BadgeCounts => {
+  const badgeCounts: BadgeCounts = {
+    BRONZE: 0,
+    SILVER: 0,
+    GOLD: 0,
+    PLATINUM: 0,
+    DIAMOND: 0,
+    FREQUENT: 0,
+    REGULAR: 0,
+    DEDICATED: 0,
+    HEALTH: 0,
+    ANIMAUX: 0,
+    environnement: 0, // Initialize environnement badge count
+  };
+  const { criteria } = params;
+
+  criteria.forEach((item) => {
+    const { type, count } = item;
+    const badgeLevels = BADGE_CRITERIA[type];
+
+    Object.keys(badgeLevels).forEach((level: string) => {
+      if (count >= badgeLevels[level as keyof typeof badgeLevels]) {
+        // Increment badge count based on badgeLevels
+        badgeCounts[level as keyof BadgeCounts] =
+          (badgeCounts[level as keyof BadgeCounts] || 0) + 1;
+
+        // Increment environnement badge count specifically
+        if (level === "environnement") {
+          badgeCounts.environnement = (badgeCounts.environnement ?? 0) + 1;
+        }
+      }
+    });
+  });
+
+  return badgeCounts;
 };
