@@ -5,7 +5,8 @@ import { handleError } from "../utils";
 import { connectToDatabase } from "../database";
 import User from "../database/models/user.model";
 import Post from "../database/models/post.model";
-import Category from "../database/models/category.model";
+import Category, { ICategory } from "../database/models/category.model";
+
 const PopulateRequest = (query: any) => {
     return query
         .populate({ path: 'Fundraiser_organisation', model: User, select: '_id firstName lastName photo' })
@@ -57,7 +58,15 @@ export const getDonationRequestById = async (reqId: string) => {
 export const getAllDonationRequests = async ({ query, limit = 6, page, category }: GetAllEventsParams) => {
     try {
         await connectToDatabase();
-        const conditions = {};
+        
+        const titleCondition = query ? { title: { $regex: query, $options: 'i' } } : {}
+        const categoryCondition = category ? await getCategoryByName(category) : null
+        const conditions = {
+          $and: [titleCondition, categoryCondition ? { category: categoryCondition._id } : {}],
+        }
+        
+        const skipAmount = (Number(page) - 1) * limit
+        
         const donationRequestsquery = await Post.find(conditions)
             .sort({ createdAt: "desc" })
             .skip((page - 1) * limit)
@@ -74,6 +83,8 @@ export const getAllDonationRequests = async ({ query, limit = 6, page, category 
 
         const donationRequestsCount = await Post.countDocuments(conditions);
         console.log("donationRequestsCount : ", donationRequestsCount);
+        
+        
         return {
             totalPages: Math.ceil(donationRequestsCount / limit),
             data: JSON.parse(JSON.stringify(donationRequestsquery)),
@@ -170,3 +181,14 @@ export async function getRelatedEventsByCategory({
         handleError(error)
     }
 }
+
+const getCategoryByName= async (categoryName: string): Promise<ICategory | null> => {
+    try {
+        await connectToDatabase();
+        const category = await Category.findOne({ name: categoryName }).exec();
+        return category;
+    } catch (error) {
+        handleError(error);
+        return null;
+    }
+};
