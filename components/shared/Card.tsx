@@ -14,11 +14,14 @@ type CardProps = {
 
 const Card = ({ post, hasOrderLink, hideAmount }: CardProps) => {
   const { sessionClaims } = auth();
+  console.log("card\n");
+  console.log(post);
+  console.log("\n\n");
   const userId = sessionClaims?.userId as string;
   // TODO: check the post man
   const isPostAuthor =
-    post?.donator?._id.toString() === userId ||
-    post?.Fundraiser_organisation._id.toString() === userId;
+    (post?.donator?._id as string) === userId ||
+    post?.Fundraiser_organisation?._id === userId;
   return (
     <div className="group relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px]">
       <Link
@@ -29,7 +32,7 @@ const Card = ({ post, hasOrderLink, hideAmount }: CardProps) => {
       {/* is post creator */}
       {isPostAuthor && (
         <div className="absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all">
-          <Link href={`/announcements/${post._id}/update`}>
+          <Link href={`/announcements/${post._id}/Update`}>
             <Image
               src={"/assets/icons/edit.svg"}
               alt="edit"

@@ -7,7 +7,9 @@ import GeneratePDF from "../GeneratePDF/GeneratePDF";
 const License = async ({ params, searchParams }: any) => {
   const { sessionClaims } = auth();
   const clerkId = sessionClaims?.userId as string;
-  const userInfo = await getUserById(clerkId);
+  //const userInfo : any = await getUserById(clerkId);
+  const userResponse: any = await getUserById(clerkId);
+  const userInfo = userResponse?.user;
   console.log(userInfo);
 
   // Function to get the current date

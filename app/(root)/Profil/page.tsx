@@ -1,22 +1,21 @@
 import { Button } from "@/components/ui/button";
-import {
-  getDonationsByRequest,
-  getDonationsByUser,
-} from "@/lib/actions/donation.actions";
+import { getDonationsByUser } from "@/lib/actions/donation.actions";
 import { IDonation } from "@/lib/database/models/donation.model";
 import { SearchParamProps } from "@/types";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import React from "react";
 import Collections from "@/components/shared/Collections";
+import {
+  getDonationRequestById,
+  getEventsByUser,
+} from "@/lib/actions/DonationRequest.actions";
 import Image from "next/image";
-
 import { getJoinedDate } from "@/lib/utils";
 import { BadgeCounts, URLProps } from "@/types/index.d";
 import ProfileLink from "@/components/shared/ProfileLinks";
 import { FaPlus } from "react-icons/fa";
 import { getUserById } from "@/lib/actions/user.actions";
-import { getEventsByUser } from "@/lib/actions/DonationRequest.actions";
 
 interface StatsCardProps {
   imgUrl: string;
@@ -47,8 +46,9 @@ const StatsCard = ({ imgUrl, value, title }: StatsCardProps) => {
 const ProfilePage = async ({ searchParams }: SearchParamProps) => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
-  const userResponse = await getUserById(userId);
+  const userResponse: any = await getUserById(userId);
   const user = userResponse?.user;
+
   // const totalPosts = userResponse?.totalPosts;
   // console.log("totalPosts" + totalPosts + "\n\n")
   const totalDonations = userResponse?.totalDonations;
@@ -65,17 +65,14 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
     userId,
     page: donationsPage,
   });
-  const loginUser = await getUserById(userId);
   const donationPosts =
     my_donations?.data.map((donation: IDonation) => donation.post) || [];
-  // console.log("donation posts\n");
-  // console.log(donationPosts);
-  // console.log("\n\n");
+  console.log("the donation posts : " + donationPosts + "\n\n");
+  console.log("donation posts\n");
+  console.log(donationPosts);
+  console.log("\n\n");
 
-  const organizedFunds = await getEventsByUser({
-    userId,
-    page: postsPage,
-  });
+  const organizedFunds = await getEventsByUser({ userId, page: postsPage });
 
   return (
     <>
@@ -272,6 +269,25 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
                 return null;
               })}
           </div>
+          <div>
+            <Button
+              asChild
+              size="lg"
+              className="button hidden sm:flex"
+              disabled={user.donatedMoney < 100}
+            >
+              <Link href="/License">
+                Claim your certificate{" "}
+                <Image
+                  style={{ marginLeft: "0.3rem" }}
+                  src="/assets/images/network-1-svgrepo-com.svg"
+                  alt="arrow right"
+                  width={20}
+                  height={20}
+                />
+              </Link>
+            </Button>
+          </div>
         </div>
         {/* Box under information */}
       </div>
@@ -279,14 +295,9 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
       <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
         <div className="wrapper flex items-center justify-center sm:justify-between">
           <h3 className="h3-bold text-center sm:text-left">My Donations :💛</h3>
-          <Button
-            asChild
-            size="lg"
-            className="button hidden sm:flex"
-            disabled={loginUser && loginUser.donatedMoney < 100}
-          >
-            <Link href="/License">
-              Claim your certificate{" "}
+          <Button asChild size="lg" className="button hidden sm:flex">
+            <Link href="/announcements">
+              Explore Our Community{" "}
               <Image
                 style={{ marginLeft: "0.3rem" }}
                 src="/assets/images/network-1-svgrepo-com.svg"
@@ -312,16 +323,14 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
         />
       </section>
 
-      {/* funds Organized */}
+      {/* Events Organized */}
       <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
         <div className="wrapper flex items-center justify-center sm:justify-between">
           <h3 className="h3-bold text-center sm:text-left">
             Fundraising Organized
           </h3>
           <Button asChild size="lg" className="button hidden sm:flex">
-            <Link href="/announcements/create">
-              Create new Fundraizing Call
-            </Link>
+            <Link href="/events/create">Create new Fundraizing Call</Link>
           </Button>
         </div>
       </section>
@@ -329,7 +338,7 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
       <section className="wrapper my-8">
         <Collections
           data={organizedFunds?.data}
-          emptyTitle="No Funds have been created yet"
+          emptyTitle="No events have been created yet"
           emptyStateSubText="Go create some now"
           CollectionType="all_Donations"
           limit={3}

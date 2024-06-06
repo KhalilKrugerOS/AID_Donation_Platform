@@ -72,6 +72,7 @@ export const createDonation = async (donation: CreateDonationParams) => {
         console.log(newDonation);
         console.log("\n\n");
         if (!newDonation) throw new Error("Failed to create donation");
+
         const post = await getDonationRequestById(donation.postId)
         console.log("updated post is :\n ")
         console.log({ ...post, amountRecived: post.amountReceived + newDonation.amountDonated, category: post.categoryId },
@@ -82,7 +83,7 @@ export const createDonation = async (donation: CreateDonationParams) => {
             { ...post, amountReceived: post.amountReceived + newDonation.amountDonated, category: post.categoryId },
             { new: true }
         )
-        const user = await getUserById(donation.donatorId);
+        const user: any = await getUserById(donation.donatorId);
 
         console.log("updated user is :\n ")
         console.log({ ...user, donatedMoney: user.donatedMoney + newDonation.amountDonated },
