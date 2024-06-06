@@ -30,7 +30,7 @@ const Card = ({ post, hasOrderLink, hideAmount }: CardProps) => {
         className="flex-center flex-grow bg-gray-50 bg-cover bg-center text-gray-500"
       />
       {/* is post creator */}
-      {isPostAuthor && (
+       {isPostAuthor && (
         <div className="absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all">
           <Link href={`/announcements/${post._id}/Update`}>
             <Image
@@ -42,7 +42,8 @@ const Card = ({ post, hasOrderLink, hideAmount }: CardProps) => {
           </Link>
           <DeleteConfirmation postId={post._id.toString()} />
         </div>
-      )}
+      )} 
+
       <Link
         href={`/announcements/${post._id}`}
         className="flex min-h-[150px] flex-col gap-3 p-5 md:gap-4"

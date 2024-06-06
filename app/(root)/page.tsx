@@ -71,6 +71,9 @@ export default function Home() {
       <div className="reveal">
         <Testimonials />
       </div>
+      <div className="reveal">
+        <Blog/>
+      </div>
 
       <div className="reveal">
         <Blog />

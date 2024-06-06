@@ -21,7 +21,6 @@
     "paths": {
       "@/*": ["./*"]
     }
-    
   },
   "include": [
     "next-env.d.ts",
@@ -29,7 +28,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/(root)/License/page.jsx",
-    "app/(root)/License/page.jsx"
-, "app/api/donate"  ],
+    "app/api/donate"
+  ],
   "exclude": ["node_modules"]
 }
