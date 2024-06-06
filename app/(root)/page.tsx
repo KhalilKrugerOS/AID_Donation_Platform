@@ -12,6 +12,7 @@ import Hero from "@/components/Hero";
 import Pricing from "@/components/Pricing";
 import Testimonials from "@/components/Testimonials";
 import Video from "@/components/Video";
+import Blog from "@/components/Blog";
 
 export default function Home() {
   useEffect(() => {
@@ -71,6 +72,9 @@ export default function Home() {
         <Testimonials />
       </div>
 
+      <div className="reveal">
+        <Blog />
+      </div>
       <div className="reveal">
         <Contact />
       </div>
