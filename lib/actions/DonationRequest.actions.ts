@@ -112,7 +112,9 @@ export async function updateDonationRequest({ userId, post, path }: UpdateEventP
             { ...post, category: post.categoryId },
             { new: true }
         )
-        revalidatePath(path)
+        console.log("updated post : \n\n\n")
+        console.log(updatedPost)
+        revalidatePath(path);
 
         return JSON.parse(JSON.stringify(updatedPost))
     } catch (error) {
