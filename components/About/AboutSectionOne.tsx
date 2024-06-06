@@ -7,16 +7,20 @@ const checkIcon = (
   </svg>
 );
 
-const AboutSectionOne = () => {
-  const List = ({ text }) => (
-    <p className="mb-5 flex items-center text-lg font-medium text-body-color">
-      <span className="mr-4 flex h-[30px] w-[30px] items-center justify-center rounded-md bg-primary bg-opacity-10 text-primary">
-        {checkIcon}
-      </span>
-      {text}
-    </p>
-  );
+interface ListProps {
+  text: string;
+}
 
+const List: React.FC<ListProps> = ({ text }) => (
+  <p className="mb-5 flex items-center text-lg font-medium text-body-color">
+    <span className="mr-4 flex h-[30px] w-[30px] items-center justify-center rounded-md bg-primary bg-opacity-10 text-primary">
+      {checkIcon}
+    </span>
+    {text}
+  </p>
+);
+
+const AboutSectionOne = () => {
   return (
     <section id="about" className="pt-16 md:pt-20 lg:pt-28">
       <div className="container">
@@ -26,7 +30,7 @@ const AboutSectionOne = () => {
               <SectionTitle
                 title="La confiance est le socle de la générosité  
                 la sécurité, son bouclier..."
-                paragraph="Nous avons établi un partenariat solide avec la Banque X, Cette collaboration garantit que chaque donation est traitée avec le plus haut niveau de protection, utilisant les protocoles de sécurité rigoureux. Avec Banque X, vos gestes de générosité sont entre des mains sûres, vous permettant de donner en toute confiance.."
+                paragraph="➤Nous avons établi un partenariat solide avec la Banque Internationale Arabe de Tunisie, Cette collaboration garantit que chaque donation est traitée avec le plus haut niveau de protection, utilisant les protocoles de sécurité rigoureux. Avec la BIAT, vos gestes de générosité sont entre des mains sûres, vous permettant de donner en toute confiance.."
                 mb="44px"
               />
 

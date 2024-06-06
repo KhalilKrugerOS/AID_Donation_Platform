@@ -80,7 +80,7 @@ const SignupPage = () => {
                   </p>
                   <span className="hidden h-[1px] w-full max-w-[60px] bg-body-color/50 sm:block"></span>
                 </div>
-                <form>
+                <form action={"/signupSelection"}>
                   <div className="mb-8">
                     <label
                       htmlFor="name"

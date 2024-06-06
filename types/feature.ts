@@ -4,3 +4,4 @@ export type Feature = {
   title: string;
   paragraph: string;
 };
+

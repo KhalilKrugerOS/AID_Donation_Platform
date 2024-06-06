@@ -8,9 +8,9 @@ const Hero = () => {
         className="relative z-10 overflow-hidden bg-white pb-16 pt-[120px] dark:bg-gray-dark md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"
       
       >
-        <div className="container"
+        <div className="container object-fit object-contain"
         style={{
-          background: `linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), url("/images/logo/image1.png")`, // Gradient pour contrôler l'opacité + Image de fond
+          background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/logo/image1.png")`, // Gradient pour contrôler l'opacité + Image de fond
 
           // Assurez-vous que le chemin est correct
           backgroundSize: 'cover', // Couvre tout l'espace disponible
@@ -20,10 +20,20 @@ const Hero = () => {
           height:'500px',
           position:'relative',
           /* Réduit la luminosité de l'image de fond */
+          animation: 'zoomBackground 10s ease-in-out infinite', // Ajoute l'animation
+
 
         }}
         >
-
+<style>
+    {`
+      @keyframes zoomBackground {
+        0% { background-size: 100%; }
+        50% { background-size: 110%; }
+        100% { background-size: 100%; }
+      }
+    `}
+  </style>
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
               <div className="mx-auto max-w-[800px] text-center">

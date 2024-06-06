@@ -18,7 +18,7 @@ const blogData: Blog[] = [
       " c'est une association en Tunisie dédiée à soutenir les orphelins. Elle fournit un hébergement sécurisé, une éducation, et des soins médicaux aux enfants sans soutien familial, leur offrant ainsi une chance de construire un avenir meilleur .",
     image: "/images/blog/blog2.png",
    
-    tags: ["+212 %"],
+    tags: ["+216 %"],
     publishDate: "2024",
   },
   {

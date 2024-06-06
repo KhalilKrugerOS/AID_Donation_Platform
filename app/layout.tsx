@@ -12,8 +12,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Teskerti TN",
-  description: "شد بلاصطك من تو عند اكبر PLATFORM للتذاكر في تونس",
+  title: "",
+  description: "",
   icons: {
     icon: "/assets/images/logo.svg",
   },

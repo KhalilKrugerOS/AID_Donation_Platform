@@ -4,12 +4,20 @@ export const headerLinks = [
     route: "/",
   },
   {
-    label: "Create Publication",
-    route: "/events/create",
+    label: "Request a donation",
+    route: "/announcements/create",
+  },
+  {
+    label: "Funds",
+    route: "/announcements",
+  },
+  {
+    label: "Community",
+    route: "/community",
   },
   {
     label: "My Profile",
-    route: "/profile",
+    route: "/Profil",
   },
 ];
 
@@ -21,7 +29,5 @@ export const eventDefaultValues = {
   startDateTime: new Date(),
   endDateTime: new Date(),
   categoryId: "",
-  price: "",
-  isFree: false,
-  url: "",
+  amountNeeded: "",
 };
