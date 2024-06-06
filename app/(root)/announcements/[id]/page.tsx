@@ -7,17 +7,12 @@ import {
 import Image from "next/image";
 import { formatDateTime } from "@/lib/utils";
 import ButtonCheckout from "@/components/shared/ButtonCheckout";
-<<<<<<< HEAD
-
-const RequestDonationDetails = async ({ params: { id } }: SearchParamProps) => {
-=======
 import Collections from "@/components/shared/Collections";
 import Progress from "@/components/ui/Progress";
 const RequestDonationDetails = async ({
   params: { id },
   searchParams,
 }: SearchParamProps) => {
->>>>>>> a9cf7fcafef94c668ed8d572c524a2dbb77427cc
   // TODO: thabet mel interface sinon na7eha IPost
   console.log("id : ", id);
   const post = await getDonationRequestById(id);
