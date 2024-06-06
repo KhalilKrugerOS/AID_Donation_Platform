@@ -14,6 +14,8 @@ import Donation from "@/lib/database/models/donation.model";
 import { revalidatePath } from "next/cache";
 import { AnyARecord } from "dns";
 import { BadgeCriteria, BadgeCriteriaType } from "@/types/index.d";
+import { BADGE_CRITERIA } from "@/constants/constants";
+import console from "console";
 
 export const createUser = async (user: CreateUserParams) => {
   try {
@@ -98,6 +100,40 @@ export async function getUserById(userId: string) {
     const donatedCategories = donatedCategoriesResult.map(
       (c) => c.categoryName
     );
+    console.log("donatedCategories:", donatedCategories);
+
+    console.log("Donated categories:", donatedCategories);
+
+    const specificCampaignCriteria: BadgeCriteria[] = donatedCategories
+      .map((category) => {
+        const campaignName = Object.keys(BADGE_CRITERIA.SPECIFIC_CAMPAIGN).find(
+          (key) => {
+            const campaignKey = key.toLowerCase();
+            const categoryLower = category.toLowerCase();
+            console.log(
+              `Comparing category "${categoryLower}" with campaign "${campaignKey}"`
+            );
+            return campaignKey === categoryLower;
+          }
+        ) as keyof typeof BADGE_CRITERIA.SPECIFIC_CAMPAIGN | undefined;
+
+        if (campaignName) {
+          console.log(
+            `Category "${category.toLowerCase()}" matches campaign "${campaignName}". Adding to specificCampaignCriteria.`
+          );
+          return {
+            type: "SPECIFIC_CAMPAIGN",
+            campaigns: [campaignName],
+          } as BadgeCriteria;
+        }
+        console.log(
+          `Category "${category.toLowerCase()}" does not match any campaign.`
+        );
+        return null;
+      })
+      .filter(Boolean) as BadgeCriteria[];
+
+    console.log("Specific campaign criteria:", specificCampaignCriteria);
 
     const criteria: BadgeCriteria[] = [
       {
@@ -108,12 +144,11 @@ export async function getUserById(userId: string) {
         type: "NUMBER_OF_DONATIONS",
         count: totalDonations,
       },
-      {
-        type: "SPECIFIC_CAMPAIGN",
-        campaigns: donatedCategories,
-      },
+      ...specificCampaignCriteria,
       // Add more criteria if needed
     ];
+
+    console.log("All criteria:", criteria);
 
     const badges = assignBadges({
       criteria: criteria.map((c) =>
@@ -121,6 +156,7 @@ export async function getUserById(userId: string) {
       ),
     });
 
+    console.log("Badges:", badges);
     return {
       user: JSON.parse(JSON.stringify(user)),
       totalDonations,

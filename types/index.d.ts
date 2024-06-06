@@ -28,7 +28,7 @@ export interface BadgeCounts {
 
   HEALTH: number;
   ANIMAUX: number;
-  ENVIRONNEMENT: number;
+  environnement: number;
 }
 
 export type BadgeCriteriaType = keyof typeof BADGE_CRITERIA;

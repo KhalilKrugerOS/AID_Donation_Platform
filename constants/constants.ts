@@ -7,13 +7,13 @@ export const BADGE_CRITERIA = {
     DIAMOND: 10000,
   },
   NUMBER_OF_DONATIONS: {
-    FREQUENT: 5,
+    FREQUENT: 2,
     REGULAR: 10,
     DEDICATED: 25,
   },
   SPECIFIC_CAMPAIGN: {
-    HEALTH: "Health Campaign Hero",
-    ANIMAUX: "Animaux Advocate",
-    ENVIRONNEMENT: "Environnement Protector",
+    HEALTH: "sante",
+    ANIMAUX: "animaux",
+    environnement: "environnement",
   },
 };

@@ -134,7 +134,7 @@ export interface BadgeCounts {
   DEDICATED?: number;
   HEALTH?: number;
   ANIMAUX?: number;
-  ENVIRONNEMENT?: number;
+  environnement?: number;
 }
 
 export const assignBadges = (params: BadgeParam): BadgeCounts => {
@@ -149,7 +149,7 @@ export const assignBadges = (params: BadgeParam): BadgeCounts => {
     DEDICATED: 0,
     HEALTH: 0,
     ANIMAUX: 0,
-    ENVIRONNEMENT: 0,
+    environnement: 0, // Initialize environnement badge count
   };
   const { criteria } = params;
 
@@ -158,10 +158,15 @@ export const assignBadges = (params: BadgeParam): BadgeCounts => {
     const badgeLevels = BADGE_CRITERIA[type];
 
     Object.keys(badgeLevels).forEach((level: string) => {
-      // Explicitly typing level as string
       if (count >= badgeLevels[level as keyof typeof badgeLevels]) {
+        // Increment badge count based on badgeLevels
         badgeCounts[level as keyof BadgeCounts] =
           (badgeCounts[level as keyof BadgeCounts] || 0) + 1;
+
+        // Increment environnement badge count specifically
+        if (level === "environnement") {
+          badgeCounts.environnement = (badgeCounts.environnement ?? 0) + 1;
+        }
       }
     });
   });

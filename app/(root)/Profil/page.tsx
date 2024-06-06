@@ -350,4 +350,3 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
 
 export default ProfilePage;
 
-
