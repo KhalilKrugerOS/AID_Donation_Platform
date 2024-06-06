@@ -4,12 +4,12 @@ export const BADGE_CRITERIA = {
     SILVER: 500,
     GOLD: 1000,
     PLATINUM: 5000,
-    DIAMOND: 10000,
+    DIAMOND: 2000000,
   },
   NUMBER_OF_DONATIONS: {
     FREQUENT: 2,
-    REGULAR: 10,
-    DEDICATED: 25,
+    REGULAR: 2,
+    DEDICATED: 2,
   },
   SPECIFIC_CAMPAIGN: {
     HEALTH: "sante",

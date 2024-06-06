@@ -1,3 +1,4 @@
+"use client"
 import NewsLatterBox from "./NewsLatterBox";
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 

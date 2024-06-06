@@ -53,6 +53,8 @@ const Checkout = ({ post, userId }: { post: IPost; userId: string }) => {
       donatorId: userId,
     };
 
+    console.log(donation);
+
     await checkoutDonation(donation);
   };
 

@@ -1,5 +1,6 @@
 import React from "react";
 import "./lic.css";
+
 import { auth } from "@clerk/nextjs/server";
 import { getUserById } from "@/lib/actions/user.actions";
 import GeneratePDF from "../GeneratePDF/GeneratePDF";
@@ -7,8 +8,8 @@ import GeneratePDF from "../GeneratePDF/GeneratePDF";
 const License = async ({ params, searchParams }: any) => {
   const { sessionClaims } = auth();
   const clerkId = sessionClaims?.userId as string;
-  //const userInfo : any = await getUserById(clerkId);
   const userResponse: any = await getUserById(clerkId);
+
   const userInfo = userResponse?.user;
   console.log(userInfo);
 

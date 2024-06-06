@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import AboutSectionOne from "@/components/About/AboutSectionOne";
-import AboutSectionTwo from "@/components/About/AboutSectionTwo";
+//import AboutSectionTwo from "@/components/About/AboutSectionTwo";
 
 import Brands from "@/components/Brands";
 import ScrollUp from "@/components/Common/ScrollUp";
@@ -13,6 +13,7 @@ import Pricing from "@/components/Pricing";
 import Testimonials from "@/components/Testimonials";
 import Video from "@/components/Video";
 import Blog from "@/components/Blog";
+import AboutSectionTwo from "@/components/About/AboutSectionTwo";
 
 export default function Home() {
   useEffect(() => {
@@ -72,13 +73,9 @@ export default function Home() {
         <Testimonials />
       </div>
       <div className="reveal">
-        <Blog/>
-      </div>
-
-      <div className="reveal">
         <Blog />
       </div>
-      <div className="reveal">
+      <div className="reveal w-full">
         <Contact />
       </div>
     </>

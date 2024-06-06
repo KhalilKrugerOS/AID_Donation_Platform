@@ -11,18 +11,17 @@ const Footer = () => {
             <div className="w-full px-4 md:w-1/2 lg:w-4/12 xl:w-5/12">
               <div className="mb-12 max-w-[360px] lg:mb-16">
                 <Link href="/" className="mb-8 inline-block">
-              
                   <Image
-                    src="/images/logo/logo.svg"
+                    src="/assets/images/logo.png"
                     alt="logo"
                     width={140}
                     height={30}
                   />
                 </Link>
-    
 
                 <p className="mb-9 text-base leading-relaxed text-body-color dark:text-body-color-dark">
-               AID est dédié à vous fournir les outils dont vous avez besoin pour collecter des fonds pour toutes vos causes.
+                  AID est dédié à vous fournir les outils dont vous avez besoin
+                  pour collecter des fonds pour toutes vos causes.
                 </p>
                 <div className="flex items-center">
                   <a
@@ -106,7 +105,7 @@ const Footer = () => {
             <div className="w-full px-4 sm:w-1/2 md:w-1/2 lg:w-2/12 xl:w-2/12">
               <div className="mb-12 lg:mb-16">
                 <h2 className="mb-10 text-xl font-bold text-black dark:text-white">
-                Liens utiles
+                  Liens utiles
                 </h2>
                 <ul>
                   <li>
@@ -114,7 +113,7 @@ const Footer = () => {
                       href="/blog"
                       className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
-                     Associations
+                      Associations
                     </Link>
                   </li>
                   <li>
@@ -156,7 +155,7 @@ const Footer = () => {
                       href="/"
                       className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
-                     Politique de Confidentialité
+                      Politique de Confidentialité
                     </Link>
                   </li>
                   <li>
@@ -174,7 +173,7 @@ const Footer = () => {
             <div className="w-full px-4 md:w-1/2 lg:w-4/12 xl:w-3/12">
               <div className="mb-12 lg:mb-16">
                 <h2 className="mb-10 text-xl font-bold text-black dark:text-white">
-                  Support & Aide 
+                  Support & Aide
                 </h2>
                 <ul>
                   <li>
@@ -182,7 +181,7 @@ const Footer = () => {
                       href="/contact"
                       className="mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
-                     Ouvrir un ticket
+                      Ouvrir un ticket
                     </Link>
                   </li>
                   <li>
@@ -209,16 +208,13 @@ const Footer = () => {
           <div className="h-px w-full bg-gradient-to-r from-transparent via-[#D2D8E183] to-transparent dark:via-[#959CB183]"></div>
           <div className="py-8">
             <p className="text-center text-base text-body-color dark:text-white">
-            {" "}
+              {" "}
               <a
                 href="http://uideck.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-primary"
-              >
-               
-              </a>{" "}
-              {" "}
+              ></a>{" "}
               <a
                 href="https://nextjstemplates.com"
                 target="_blank"

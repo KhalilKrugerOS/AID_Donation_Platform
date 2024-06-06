@@ -59,8 +59,6 @@ export async function getUserById(userId: string) {
         ? totalAmountDonatedResult[0].totalAmount
         : 0;
 
-    console.log("totalAmountDonatedResult:", totalAmountDonatedResult);
-    console.log("totalAmountDonated:", totalAmountDonated);
 
     // Get all category names of posts the user has donated to
     const donatedCategoriesResult = await Donation.aggregate([
@@ -100,40 +98,29 @@ export async function getUserById(userId: string) {
     const donatedCategories = donatedCategoriesResult.map(
       (c) => c.categoryName
     );
-    console.log("donatedCategories:", donatedCategories);
-
-    console.log("Donated categories:", donatedCategories);
-
     const specificCampaignCriteria: BadgeCriteria[] = donatedCategories
       .map((category) => {
         const campaignName = Object.keys(BADGE_CRITERIA.SPECIFIC_CAMPAIGN).find(
           (key) => {
             const campaignKey = key.toLowerCase();
             const categoryLower = category.toLowerCase();
-            console.log(
-              `Comparing category "${categoryLower}" with campaign "${campaignKey}"`
-            );
+
             return campaignKey === categoryLower;
           }
         ) as keyof typeof BADGE_CRITERIA.SPECIFIC_CAMPAIGN | undefined;
 
         if (campaignName) {
-          console.log(
-            `Category "${category.toLowerCase()}" matches campaign "${campaignName}". Adding to specificCampaignCriteria.`
-          );
+
           return {
             type: "SPECIFIC_CAMPAIGN",
             campaigns: [campaignName],
           } as BadgeCriteria;
         }
-        console.log(
-          `Category "${category.toLowerCase()}" does not match any campaign.`
-        );
+
         return null;
       })
       .filter(Boolean) as BadgeCriteria[];
 
-    console.log("Specific campaign criteria:", specificCampaignCriteria);
 
     const criteria: BadgeCriteria[] = [
       {
@@ -148,7 +135,6 @@ export async function getUserById(userId: string) {
       // Add more criteria if needed
     ];
 
-    console.log("All criteria:", criteria);
 
     const badges = assignBadges({
       criteria: criteria.map((c) =>
@@ -156,7 +142,6 @@ export async function getUserById(userId: string) {
       ),
     });
 
-    console.log("Badges:", badges);
     return {
       user: JSON.parse(JSON.stringify(user)),
       totalDonations,
@@ -175,6 +160,7 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
     const updatedUser = await User.findOneAndUpdate({ clerkId }, user, {
       new: true,
     });
+    console.log(updateUser);
 
     if (!updatedUser) throw new Error("User update failed");
     return JSON.parse(JSON.stringify(updatedUser));
@@ -183,18 +169,18 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
   }
 }
 
-export async function updateUserEdit(params: UpdateUserParamsEdit) {
+export async function updateUserEdit(params: any) {
   try {
     await connectToDatabase();
 
-    const { clerkId, updateData, path } = params;
+    const { userId, updateData, path } = params;
 
-    const updatedUser = await User.findOneAndUpdate({ clerkId }, updateData, {
+    const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
       new: true,
     });
 
     if (!updatedUser) {
-      throw new Error(`User with clerkId ${clerkId} not found`);
+      throw new Error(`User with userId ${userId} not found`);
     }
 
     revalidatePath(path);

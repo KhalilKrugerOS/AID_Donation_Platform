@@ -83,7 +83,10 @@ export const createDonation = async (donation: CreateDonationParams) => {
             { ...post, amountReceived: post.amountReceived + newDonation.amountDonated, category: post.categoryId },
             { new: true }
         )
-        const user: any = await getUserById(donation.donatorId);
+        let user: any = await getUserById(donation.donatorId);
+
+        user = user.user;
+
 
         console.log("updated user is :\n ")
         console.log({ ...user, donatedMoney: user.donatedMoney + newDonation.amountDonated },
