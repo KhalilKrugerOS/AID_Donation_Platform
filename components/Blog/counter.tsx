@@ -1,15 +1,18 @@
 "use client";
 
 import { useEffect, useState, useRef } from 'react';
-
-const Counter = ({ endValue, duration }) => {
+type CounterProps = {
+  endValue : number,
+  duration : number
+}
+const Counter = ({ endValue, duration } : CounterProps) => {
   const [value, setValue] = useState(0);
   const [isCounting, setIsCounting] = useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
-    const handleIntersection = (entries) => {
-      entries.forEach(entry => {
+    const handleIntersection = (entries : any) => {
+      entries.forEach((entry : any)  => {
         if (entry.isIntersecting) {
           setIsCounting(true);
         }

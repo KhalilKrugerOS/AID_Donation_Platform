@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 import { DeleteConfirmation } from "./DeleteConfirmation";
+import Progress from "../ui/Progress";
 
 type CardProps = {
   post: IPost | any;
@@ -12,10 +13,14 @@ type CardProps = {
 };
 
 const Card = ({ post, hasOrderLink, hideAmount }: CardProps) => {
+  console.log("from card");
+  console.log(post);
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
-
-  const isPostAuthor = post.Fundraiser_organisation._id.toString() === userId;
+  // TODO: check the post man
+  const isPostAuthor =
+    post?.donator?._id.toString() === userId ||
+    post?.Fundraiser_organisation._id.toString() === userId;
   return (
     <div className="group relative flex min-h-[300px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px]">
       <Link
@@ -24,7 +29,7 @@ const Card = ({ post, hasOrderLink, hideAmount }: CardProps) => {
         className="flex-center flex-grow bg-gray-50 bg-cover bg-center text-gray-500"
       />
       {/* is post creator */}
-      {/* {isPostAuthor && (
+      {isPostAuthor && (
         <div className="absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all">
           <Link href={`/announcements/${post._id}/update`}>
             <Image
@@ -36,7 +41,7 @@ const Card = ({ post, hasOrderLink, hideAmount }: CardProps) => {
           </Link>
           <DeleteConfirmation postId={post._id.toString()} />
         </div>
-      )} */}
+      )}
       <Link
         href={`/announcements/${post._id}`}
         className="flex min-h-[150px] flex-col gap-3 p-5 md:gap-4"
@@ -46,7 +51,7 @@ const Card = ({ post, hasOrderLink, hideAmount }: CardProps) => {
             {post.amountNeeded} TND
           </span>
           <p className="p-semibold-14 w-min rounded-full bg-gray-500/10 px-4 py-1 text-gray-500 line-clamp-1 ">
-            {post.category.name}
+            {/* {post.category.name} */}
           </p>
         </div>
         <p className="p-medium-18 text-gray-500">
@@ -72,6 +77,13 @@ const Card = ({ post, hasOrderLink, hideAmount }: CardProps) => {
             </Link>
           )}
         </div>
+        <Progress
+          value={Math.floor(
+            100 -
+              ((post.amountNeeded - post.amountReceived) * 100) /
+                post.amountNeeded
+          )}
+        />
       </Link>
     </div>
   );

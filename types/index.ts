@@ -102,23 +102,22 @@ export type CreateCategoryParams = {
 
 // ====== ORDER PARAMS
 export type CheckoutOrderParams = {
-  eventTitle: string;
-  eventId: string;
-  price: string;
-  isFree: boolean;
-  buyerId: string;
+  postTitle: string;
+  postId: string;
+  amountDonated: number;
+  donatorId: string;
 };
 
-export type CreateOrderParams = {
+export type CreateDonationParams = {
   stripeId: string;
-  eventId: string;
-  buyerId: string;
-  totalAmount: string;
+  postId: string;
+  donatorId: string;
+  amountDonated: string;
   createdAt: Date;
 };
 
-export type GetOrdersByEventParams = {
-  eventId: string;
+export type GetDonationsByRequestParams = {
+  postId: string;
   searchString: string;
 };
 

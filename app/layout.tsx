@@ -12,10 +12,10 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "",
-  description: "",
+  title: "AID donation Platform",
+  description: "platform to help coorporations contribute to aid",
   icons: {
-    icon: "/assets/images/logo.svg",
+    icon: "/assets/images/next.svg",
   },
 };
 

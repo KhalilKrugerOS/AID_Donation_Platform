@@ -21,8 +21,8 @@ const SharePost = () => {
         className="mb-3 ml-3 inline-flex h-9 w-9 items-center justify-center rounded-sm bg-gray-light text-body-color duration-300 hover:bg-primary hover:text-white dark:bg-gray-dark dark:hover:bg-primary"
       >
         <svg
-          width="18"
-          height="18"
+          width="19"
+          height="19"
           viewBox="0 0 22 22"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
