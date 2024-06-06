@@ -4,7 +4,6 @@ export interface IPost extends Document {
   _id: string;
   title: string;
   description: string;
-  author: string;
   createdAt: Date;
   startDate: Date;
   endDate: Date;
@@ -12,7 +11,7 @@ export interface IPost extends Document {
   location?: string;
   amountNeeded: number;
   amountReceived: number;
-  isCompleted: boolean;
+  isCompleted?: boolean;
   category: { _id: string; name: string };
   Fundraiser_organisation: { _id: string; name: string };
 }

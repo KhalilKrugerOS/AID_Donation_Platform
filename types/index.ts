@@ -104,7 +104,7 @@ export type CreateCategoryParams = {
 export type CheckoutOrderParams = {
   postTitle: string;
   postId: string;
-  amountNeeded: number;
+  amountDonated: number;
   donatorId: string;
 };
 
@@ -112,7 +112,7 @@ export type CreateDonationParams = {
   stripeId: string;
   postId: string;
   donatorId: string;
-  amountNeeded: string;
+  amountDonated: string;
   createdAt: Date;
 };
 

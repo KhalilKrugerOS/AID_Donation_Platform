@@ -3,7 +3,7 @@ import { Schema, model, models, Document } from "mongoose";
 export interface IDonation extends Document {
   createdAt: Date;
   stripeId: string;
-  amountNeeded: string;
+  amountDonated: string;
   post: {
     _id: string;
     title: string;
@@ -17,7 +17,7 @@ export interface IDonation extends Document {
 
 export type IDonationItem = {
   _id: string;
-  totalAmount: string;
+  amountDonated: string;
   createdAt: Date;
   PostTitle: string;
   PostId: string;
@@ -34,8 +34,8 @@ const DonationSchema = new Schema({
     required: true,
     unique: true,
   },
-  amountNeeded: {
-    type: String,
+  amountDonated: {
+    type: Number,
   },
   post: {
     type: Schema.Types.ObjectId,

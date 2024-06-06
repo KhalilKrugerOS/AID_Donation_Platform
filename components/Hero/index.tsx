@@ -6,68 +6,67 @@ const Hero = () => {
       <section
         id="home"
         className="relative z-10 overflow-hidden bg-white pb-16 pt-[120px] dark:bg-gray-dark md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]"
-      
       >
-        <div className="container object-fit object-contain"
-        style={{
-          background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/logo/image1.png")`, // Gradient pour contrôler l'opacité + Image de fond
+        <div
+          className="container object-contain max-w-[100%] m-auto"
+          style={{
+            background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/logo/image1.png")`, // Gradient pour contrôler l'opacité + Image de fond
 
-          // Assurez-vous que le chemin est correct
-          backgroundSize: 'cover', // Couvre tout l'espace disponible
-          backgroundPosition: 'center', // Centre l'image dans le conteneur
-          backgroundRepeat: 'no-repeat', // Empêche la répétition de l'image
-          width:'1000px',
-          height:'500px',
-          position:'relative',
-          /* Réduit la luminosité de l'image de fond */
-          animation: 'zoomBackground 10s ease-in-out infinite', // Ajoute l'animation
-
-
-        }}
+            // Assurez-vous que le chemin est correct
+            backgroundSize: "contain", // Couvre tout l'espace disponible
+            backgroundPosition: "center", // Centre l'image dans le conteneur
+            backgroundRepeat: "no-repeat", // Empêche la répétition de l'image
+            width: "1000px",
+            height: "500px",
+            position: "relative",
+            /* Réduit la luminosité de l'image de fond */
+            animation: "zoomBackground 10s ease-in-out infinite", // Ajoute l'animation
+          }}
         >
-<style>
-    {`
+          <style>
+            {`
       @keyframes zoomBackground {
         0% { background-size: 100%; }
         50% { background-size: 110%; }
         100% { background-size: 100%; }
       }
     `}
-  </style>
+          </style>
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
               <div className="mx-auto max-w-[800px] text-center">
-                <br>
-                </br>
+                <br></br>
                 <br />
                 <br></br>
-              <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight"
-              style={{
-                color:'white',
-               fontSize:'50px',
-               
-               }}>
-   
-                Chaque Contribution: Un Pas Vers l'Extraordinaire
+                <h1
+                  className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight"
+                  style={{
+                    color: "white",
+                    fontSize: "50px",
+                  }}
+                >
+                  Chaque Contribution: Un Pas Vers l'Extraordinaire
                 </h1>
-                <p className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl"
-                 style={{
-                 color:'white',
-                 fontSize:'30px',
-                
-                }}>
-                Chaque don est un investissement dans 
-                un avenir plus lumineux et équitable. Ensemble, faisons une différence durable 
-                - un geste, un don à la fois.
+                <p
+                  className="mb-12 text-base !leading-relaxed text-body-color dark:text-body-color-dark sm:text-lg md:text-xl"
+                  style={{
+                    color: "white",
+                    fontSize: "30px",
+                  }}
+                >
+                  Chaque don est un investissement dans un avenir plus lumineux
+                  et équitable. Ensemble, faisons une différence durable - un
+                  geste, un don à la fois.
                 </p>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                   <Link
+
                     href="/announcements"
+                    href="/announcements/"
                     className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
                   >
                     commencer maintenant
                   </Link>
-      
                 </div>
               </div>
             </div>
@@ -93,10 +92,7 @@ const Hero = () => {
               r="18"
               fill="url(#paint1_radial_25:217)"
             />
-           
-           
-        
-           
+
             <defs>
               <linearGradient
                 id="paint0_linear_25:217"
@@ -109,8 +105,7 @@ const Hero = () => {
                 <stop stopColor="#4A6CF7" />
                 <stop offset="1" stopColor="#4A6CF7" stopOpacity="0" />
               </linearGradient>
-             
-           
+
               <linearGradient
                 id="paint3_linear_25:217"
                 x1="226.775"
